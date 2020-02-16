@@ -4,6 +4,7 @@ module.exports = {
     es6: true,
   },
   extends: ['airbnb-base'],
+  plugins: ['import'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
