@@ -19,9 +19,12 @@ export class NewsService {
 
   static async find(id) {
     try {
-      // TODO: populate('author)
-      const record = await NewsModel.findOne({ _id: id });
+      // const record = await NewsModel.findOne({ _id: id }).populate({
+      //   path: 'comments',
+      //   populate: { path: 'children', model: 'Comment' },
+      // });
 
+      const record = await NewsModel.findOne({ _id: id });
       if (!record) {
         throw new Error('Not Found');
       }

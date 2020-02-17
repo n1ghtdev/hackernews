@@ -1,4 +1,4 @@
-import { isProd } from './vars';
+const isProd = process.env.NODE_ENV === 'production';
 
 export const notFound = (req, res, next) => {
   const error = new Error(`Not Found: ${req.originalUrl}`);

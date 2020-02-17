@@ -8,6 +8,7 @@ import config from './config';
 import { news } from './api/news';
 import { auth } from './api/auth';
 import { user } from './api/user';
+import { comment } from './api/comment';
 import { notFound, errorHandler } from './middlewares';
 
 const isProd = process.env.NODE_ENV === 'production';
@@ -26,6 +27,7 @@ app.use(morgan('dev'));
 app.use('/api/news', news);
 app.use('/api/auth', auth);
 app.use('/api/user', user);
+app.use('/api/comment', comment);
 
 if (isProd) {
   const buildPath = path.resolve(__dirname, '../../client/build');

@@ -25,6 +25,7 @@ const UserSchema = new mongoose.Schema({
     default: 'user',
   },
   news: [{ type: mongoose.Schema.Types.ObjectId, ref: 'News' }],
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
 });
 
 export default mongoose.model('User', UserSchema);

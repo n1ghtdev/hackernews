@@ -12,11 +12,19 @@ const NewsSchema = new mongoose.Schema(
     },
     source: String,
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   },
   {
     timestamps: true,
   },
 );
+
+function deepPopulate(next) {
+  this.populate('children');
+  next();
+}
+
+NewsSchema.pre('findOne', deepPopulate).pre('find', deepPopulate);
 
 NewsSchema.pre('save', function (next) {
   const postId = this._id;

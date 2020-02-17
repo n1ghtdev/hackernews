@@ -15,7 +15,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const record = await NewsService.find(req.body.id);
+    const record = await NewsService.find(req.params.id);
     res.json(record).status(200);
   } catch (error) {
     next(error);
