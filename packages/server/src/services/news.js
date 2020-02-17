@@ -5,6 +5,7 @@ export class NewsService {
     try {
       // TODO: populate('author)
       const newsRecord = await NewsModel.create(newsInput);
+      // const newsRecord = new NewsModel(newsInput);
 
       if (!newsRecord) {
         throw new Error('News entity cannot be created');

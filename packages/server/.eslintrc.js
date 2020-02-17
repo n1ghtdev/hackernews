@@ -15,5 +15,9 @@ module.exports = {
   },
   rules: {
     'import/prefer-default-export': 0,
+    'dot-notation': 0,
+    'consistent-return': 0,
+    'no-underscore-dangle': 0,
+    'arrow-parens': [2, 'as-needed'],
   },
 };

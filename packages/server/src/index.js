@@ -1,8 +1,9 @@
 import { app } from './app';
+import config from './config';
 
-const port = process.env.PORT || 3030;
+const port = config.port || 3030;
 
-app.listen(port, (err) => {
+app.listen(port, err => {
   if (err) {
     console.error(`Error: ${err.message}`);
   } else {

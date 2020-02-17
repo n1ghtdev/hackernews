@@ -6,7 +6,10 @@ const NewsSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Enter news title'],
     },
-    points: Number,
+    points: {
+      type: Number,
+      default: 0,
+    },
     source: String,
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   },
@@ -14,5 +17,20 @@ const NewsSchema = new mongoose.Schema(
     timestamps: true,
   },
 );
+
+NewsSchema.pre('save', function (next) {
+  const postId = this._id;
+  const authorId = this.author;
+
+  try {
+    this.model('User').updateOne(
+      { _id: authorId },
+      { $push: { news: postId } },
+      next,
+    );
+  } catch (error) {
+    next(error);
+  }
+});
 
 export default mongoose.model('News', NewsSchema);

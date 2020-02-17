@@ -24,6 +24,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: 'user',
   },
+  news: [{ type: mongoose.Schema.Types.ObjectId, ref: 'News' }],
 });
 
 export default mongoose.model('User', UserSchema);

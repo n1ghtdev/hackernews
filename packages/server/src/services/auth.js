@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import UserModel from '../models/user';
+import config from '../config';
 
 export class AuthService {
   static async SignUp(authInput) {
@@ -19,7 +20,9 @@ export class AuthService {
       if (!userRecord) {
         throw new Error('User cannot be created');
       }
+
       const user = userRecord.toObject();
+      delete user.password;
 
       return { user, token };
     } catch (error) {
@@ -39,6 +42,7 @@ export class AuthService {
       const token = this.generateToken(userRecord);
 
       const user = userRecord.toObject();
+      delete user.password;
 
       return { user, token };
       // eslint-disable-next-line no-else-return
@@ -54,12 +58,11 @@ export class AuthService {
 
     return jwt.sign(
       {
-        // eslint-disable-next-line no-underscore-dangle
         _id: user._id,
         name: user.name,
         exp: exp.getTime() / 1000,
       },
-      process.env.JWT_SECRET,
+      config.jwtSecret,
     );
   }
 }

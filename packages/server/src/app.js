@@ -1,21 +1,20 @@
 import express from 'express';
-import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import path from 'path';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
 
+import config from './config';
 import { news } from './api/news';
 import { auth } from './api/auth';
+import { user } from './api/user';
 import { notFound, errorHandler } from './middlewares';
-
-dotenv.config();
 
 const isProd = process.env.NODE_ENV === 'production';
 
 const app = express();
 
-mongoose.connect(process.env.DATABASE, {
+mongoose.connect(config.db, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -26,6 +25,7 @@ app.use(morgan('dev'));
 
 app.use('/api/news', news);
 app.use('/api/auth', auth);
+app.use('/api/user', user);
 
 if (isProd) {
   const buildPath = path.resolve(__dirname, '../../client/build');
