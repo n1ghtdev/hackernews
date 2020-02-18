@@ -34,4 +34,13 @@ router.post('/', isAuth, async (req, res, next) => {
   }
 });
 
+router.delete('/', isAuth, async (req, res, next) => {
+  try {
+    const record = await NewsService.delete(req.body.id);
+    res.json(record).status(200);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export { router as news };

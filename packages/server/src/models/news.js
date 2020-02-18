@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+// const deepPopulate = require('mongoose-deep-populate')(mongoose);
+
 const NewsSchema = new mongoose.Schema(
   {
     title: {
@@ -19,13 +21,6 @@ const NewsSchema = new mongoose.Schema(
   },
 );
 
-function deepPopulate(next) {
-  this.populate('children');
-  next();
-}
-
-NewsSchema.pre('findOne', deepPopulate).pre('find', deepPopulate);
-
 NewsSchema.pre('save', function (next) {
   const postId = this._id;
   const authorId = this.author;
@@ -41,4 +36,22 @@ NewsSchema.pre('save', function (next) {
   }
 });
 
+NewsSchema.pre('deleteOne', { document: true }, function (next) {
+  const postId = this._id;
+  const commentIds = this.comments;
+
+  try {
+    this.model('Comment').deleteMany({ post: postId, _id: commentIds }, err => {
+      if (err) {
+        throw new Error(err.message);
+      }
+      next();
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// NewsSchema.plugin(deepPopulate);
 export default mongoose.model('News', NewsSchema);

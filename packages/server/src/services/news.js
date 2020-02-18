@@ -19,12 +19,10 @@ export class NewsService {
 
   static async find(id) {
     try {
-      // const record = await NewsModel.findOne({ _id: id }).populate({
-      //   path: 'comments',
-      //   populate: { path: 'children', model: 'Comment' },
-      // });
+      const record = await NewsModel.findOne({
+        _id: id,
+      }).populate('comments');
 
-      const record = await NewsModel.findOne({ _id: id });
       if (!record) {
         throw new Error('Not Found');
       }
@@ -53,9 +51,10 @@ export class NewsService {
 
   static async delete(id) {
     try {
-      const { deletedCount, ok } = await NewsModel.deleteOne({ _id: id });
-      const status = (deletedCount > 1 && ok === 1) || false;
-
+      const doc = await NewsModel.findById(id);
+      const status = await doc.deleteOne();
+      // const status = (deletedCount > 1 && ok === 1) || false;
+      console.log(status);
       if (!status) {
         throw new Error('Deleting Failed');
       }

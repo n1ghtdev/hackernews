@@ -41,7 +41,7 @@ export class CommentService {
         { _id: commentId },
         {
           $push: {
-            children: doc._id,
+            comments: doc._id,
           },
         },
       );
@@ -51,7 +51,6 @@ export class CommentService {
       }
     });
 
-    console.log(replyRecord);
     return replyRecord;
   }
 }
