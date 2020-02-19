@@ -1,8 +1,8 @@
 import produce from 'immer';
+import { Reducer } from 'redux';
 import * as types from './constants';
 import { Action } from './actions';
 import { State, User } from './types';
-import { Reducer } from 'redux';
 
 const initialState: State = {
   user: {} as User,
