@@ -1,24 +1,24 @@
 import React from 'react';
-import { addPost } from './api';
+import { useDispatch, useSelector } from 'react-redux';
+import { saveUser, removeUser } from './modules/user/actions';
+import { RootState } from './modules/reducers';
+import PostsPage from './pages/posts-page';
 
 function App() {
-  const [res, set] = React.useState();
+  const dispatch = useDispatch();
+  const currentUser = useSelector((state: RootState) => state.user);
+
   React.useEffect(() => {
-    const user = localStorage.getItem('user');
-    user && set(JSON.parse(user));
-    (async function() {
-      try {
-        const data = await addPost({
-          title: 'authorized from client',
-          source: '/',
-        });
-        console.log(data);
-      } catch (err) {
-        console.error(err);
-      }
-    })();
-  }, []);
-  return <h1>{res && res.user.name}</h1>;
+    const cachedUser = localStorage.getItem('user');
+    const user = cachedUser && JSON.parse(cachedUser);
+    dispatch(saveUser(user));
+  }, [dispatch]);
+  return (
+    <>
+      {currentUser.isAuth ? <h1>{currentUser.user.name}</h1> : null}
+      <PostsPage />
+    </>
+  );
 }
 
 export default App;

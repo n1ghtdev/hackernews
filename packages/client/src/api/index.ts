@@ -90,8 +90,7 @@ export async function addPost(data: any) {
   const user = localStorage.getItem('user');
   const token = user && JSON.parse(user).token;
 
-  const headers = { ...defaultHeaders, authorization: `bearer ${token}` };
-  console.log(headers);
+  const headers = { ...defaultHeaders, authorization: `Bearer ${token}` };
 
   const posted = await post(`${POST_API}`, data, headers);
   return posted;
