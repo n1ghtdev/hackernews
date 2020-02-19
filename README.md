@@ -1,5 +1,7 @@
 ### Hackernews clone with MERN-stack
 
+#### server
+
 - [x] user/auth
 - [x] news posts
 - [x] auth with jwt
@@ -13,3 +15,14 @@
 - [ ] logger
 - [ ] use post slug instead of id
 - [ ] validate new post
+
+#### client
+
+- [x] redux
+  - [x] user module
+  - [x] posts module
+- [x] posts page
+- [ ] auth page
+- [ ] user page
+- [ ] post page
+- [ ] add new post page
