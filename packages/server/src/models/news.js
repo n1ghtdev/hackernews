@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
 
-// const deepPopulate = require('mongoose-deep-populate')(mongoose);
-
 const NewsSchema = new mongoose.Schema(
   {
     title: {
@@ -48,10 +46,8 @@ NewsSchema.pre('deleteOne', { document: true }, function (next) {
       next();
     });
   } catch (error) {
-    console.error(error);
     next(error);
   }
 });
 
-// NewsSchema.plugin(deepPopulate);
 export default mongoose.model('News', NewsSchema);

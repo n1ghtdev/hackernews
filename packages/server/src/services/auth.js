@@ -42,7 +42,10 @@ export class AuthService {
       const token = this.generateToken(userRecord);
 
       const user = userRecord.toObject();
+
       delete user.password;
+      delete user.news;
+      delete user.comments;
 
       return { user, token };
       // eslint-disable-next-line no-else-return

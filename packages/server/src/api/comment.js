@@ -4,6 +4,15 @@ import { isAuth } from './middlewares/isAuth';
 
 const router = Router();
 
+router.get('/:postId', async (req, res, next) => {
+  try {
+    const comments = await CommentService.getByPostId(req.params.postId);
+    res.json(comments).status(200);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post('/', isAuth, async (req, res, next) => {
   try {
     const comment = await CommentService.addComment({
