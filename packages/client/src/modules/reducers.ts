@@ -5,7 +5,7 @@ import isFetchingReducer from './isFetching/reducer';
 
 const reducers = combineReducers({
   user: userReducer,
-  posts: postsReducer,
+  news: postsReducer,
   isFetching: isFetchingReducer,
 });
 

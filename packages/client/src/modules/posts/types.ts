@@ -1,14 +1,27 @@
 import { User } from '../user/types';
 
 export type Post = {
-  _id?: string;
+  _id: string;
   title: string;
   points: number;
   source: string;
-  author: User;
+  author?: User;
+};
+
+export type PostList = {
+  [key: string]: Post;
+};
+
+export type Comment = {
+  [key: string]: any;
+};
+
+export type Comments = {
+  [key: string]: Comment;
 };
 
 export type State = {
-  data: Post[];
-  error?: string;
+  posts: PostList;
+  post: Post;
+  comments: Comments;
 };
