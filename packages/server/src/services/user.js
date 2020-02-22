@@ -2,6 +2,7 @@ import UserModel from '../models/user';
 
 export class UserService {
   static async find(id) {
+    // TODO: populate news/comments
     const userRecord = await UserModel.find({ _id: id }).exec();
 
     if (!userRecord) {

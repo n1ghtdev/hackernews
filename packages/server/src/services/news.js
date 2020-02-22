@@ -5,7 +5,6 @@ export class NewsService {
     try {
       // TODO: populate('author)
       const newsRecord = await NewsModel.create(newsInput);
-      // const newsRecord = new NewsModel(newsInput);
 
       if (!newsRecord) {
         throw new Error('News entity cannot be created');
@@ -21,7 +20,10 @@ export class NewsService {
     try {
       const record = await NewsModel.findOne({
         _id: id,
-      }).populate('comments');
+      }).populate({
+        path: 'comments',
+        populate: { path: 'user', select: '_id, name, role' },
+      });
 
       if (!record) {
         throw new Error('Not Found');
@@ -53,8 +55,7 @@ export class NewsService {
     try {
       const doc = await NewsModel.findById(id);
       const status = await doc.deleteOne();
-      // const status = (deletedCount > 1 && ok === 1) || false;
-      console.log(status);
+
       if (!status) {
         throw new Error('Deleting Failed');
       }

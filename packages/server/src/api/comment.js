@@ -19,23 +19,8 @@ router.post('/', isAuth, async (req, res, next) => {
       post: req.body.postId,
       user: req.user._id,
       comment: req.body.comment,
+      parent: req.body.parent,
     });
-    res.json(comment).status(200);
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.post('/reply', isAuth, async (req, res, next) => {
-  try {
-    const comment = await CommentService.addReply(
-      {
-        post: req.body.postId,
-        user: req.user._id,
-        comment: req.body.comment,
-      },
-      req.body.commentId,
-    );
     res.json(comment).status(200);
   } catch (error) {
     next(error);

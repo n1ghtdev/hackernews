@@ -20,12 +20,12 @@ export class CommentService {
       if (err) {
         throw new Error(err.message);
       }
-
+      // TODO: do not count replies to commentsCount?
       await NewsModel.updateOne(
         {
           _id: doc.post,
         },
-        { $push: { comments: doc._id } },
+        { $push: { comments: doc._id }, $inc: { commentsCount: 1 } },
       );
 
       await UserModel.updateOne(
@@ -41,28 +41,5 @@ export class CommentService {
     });
 
     return commentRecord;
-  }
-
-  static async addReply(data, commentId) {
-    const replyRecord = new CommentModel(data).save(async (err, doc) => {
-      if (err) {
-        throw new Error(err.message);
-      }
-
-      const refComment = await CommentModel.updateOne(
-        { _id: commentId },
-        {
-          $push: {
-            comments: doc._id,
-          },
-        },
-      );
-
-      if (refComment.ok !== 1) {
-        throw new Error('Cannot add reply to comment');
-      }
-    });
-
-    return replyRecord;
   }
 }
