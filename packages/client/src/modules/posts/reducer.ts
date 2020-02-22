@@ -7,7 +7,6 @@ import { State, Post, Comment } from './types';
 const initialState: State = {
   posts: {},
   post: { _id: '', title: '', points: 0, source: '' },
-  comments: {},
 };
 
 const posts = (state: any, action: AnyAction) => {
@@ -26,6 +25,25 @@ const posts = (state: any, action: AnyAction) => {
     case types.DELETE_POST_SUCCESS:
       delete state[action.payload];
       break;
+    case types.ADD_COMMENT_SUCCESS:
+      const { post } = action.payload;
+      return {
+        ...state,
+        [post]: {
+          ...state[post],
+          comments: [...state[post].comments, action.payload._id],
+        },
+      };
+    case types.DELETE_COMMENT_SUCCESS: {
+      const { post, _id } = action.payload;
+      const filteredComments = state[post].comments.filter(
+        (comment: Comment) => comment._id !== _id,
+      );
+      return {
+        ...state,
+        [post]: { ...state[post], comments: filteredComments },
+      };
+    }
     default:
       return state;
   }
@@ -42,26 +60,22 @@ const post = (state: any, action: AnyAction) => {
         return {};
       }
       return state;
+    case types.ADD_COMMENT_SUCCESS: {
+      const comment = { [action.paylod._id]: action.payload };
+      return { ...state, comments: [...state.comments, comment] };
+    }
+    case types.UPDATE_COMMENT_SUCCESS: {
+      const comment = { [action.paylod._id]: action.payload };
+      return { ...state, comments: [...state.comments, comment] };
+    }
+    case types.DELETE_COMMENT_SUCCESS: {
+      const filteredComments = state.comments.filter(
+        (comment: Comment) => comment._id !== action.payload._id,
+      );
+      return { ...state, comments: filteredComments };
+    }
     default:
       return state;
-  }
-};
-
-const comments = (state: any, action: AnyAction) => {
-  switch (action.type) {
-    case types.COMMENTS_SUCCESS:
-      let newState = { ...state };
-      action.payload.forEach((comment: Comment) => {
-        newState[comment._id] = comment;
-      });
-      return newState;
-    case types.ADD_COMMENT_SUCCESS:
-      return { ...state, [action.payload._id]: action.payload };
-    case types.UPDATE_COMMENT_SUCCESS:
-      return { ...state, [action.payload._id]: action.payload };
-    case types.DELETE_COMMENT_SUCCESS:
-      delete state[action.payload];
-      break;
   }
 };
 
@@ -72,19 +86,16 @@ const reducer: Reducer<State> = (state = initialState, action) =>
         draft.posts = posts(state.posts, action);
         break;
       case types.POST_SUCCESS:
+      case types.UPDATE_COMMENT_SUCCESS:
         draft.post = post(state.post, action);
         break;
       case types.ADD_POST_SUCCESS:
       case types.UPDATE_POST_SUCCESS:
       case types.DELETE_POST_SUCCESS:
+      case types.ADD_COMMENT_SUCCESS:
+      case types.DELETE_COMMENT_SUCCESS:
         draft.posts = posts(state.posts, action);
         draft.post = post(state.post, action);
-        break;
-      case types.COMMENTS_SUCCESS:
-      case types.ADD_COMMENT_SUCCESS:
-      case types.UPDATE_COMMENT_SUCCESS:
-      case types.DELETE_COMMENT_SUCCESS:
-        draft.comments = comments(state.comments, action);
         break;
     }
   });

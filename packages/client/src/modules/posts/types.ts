@@ -16,12 +16,7 @@ export type Comment = {
   [key: string]: any;
 };
 
-export type Comments = {
-  [key: string]: Comment;
-};
-
 export type State = {
   posts: PostList;
   post: Post;
-  comments: Comments;
 };
