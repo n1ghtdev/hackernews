@@ -118,3 +118,8 @@ export function logout() {
   const currentUser = localStorage.getItem('user');
   if (currentUser) localStorage.removeItem('user');
 }
+
+export async function getComments(postId: string) {
+  const comments = await get(`${COMMENT_API}/${postId}`);
+  return comments;
+}

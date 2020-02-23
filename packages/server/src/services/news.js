@@ -1,4 +1,5 @@
 import NewsModel from '../models/news';
+import CommentModel from '../models/comment';
 
 export class NewsService {
   static async create(newsInput) {
@@ -20,16 +21,20 @@ export class NewsService {
     try {
       const record = await NewsModel.findOne({
         _id: id,
-      }).populate({
-        path: 'comments',
-        populate: { path: 'user', select: '_id, name, role' },
       });
-
+      const comments = await CommentModel.find({
+        post: id,
+        parent: null,
+      }).populate({
+        path: 'user',
+        select: '_id, name, role',
+      });
       if (!record) {
         throw new Error('Not Found');
       }
 
-      return record;
+      const post = { ...record['_doc'], comments };
+      return post;
     } catch (error) {
       throw new Error(error.message);
     }

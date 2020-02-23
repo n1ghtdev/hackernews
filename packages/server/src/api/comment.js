@@ -18,7 +18,7 @@ router.post('/', isAuth, async (req, res, next) => {
     const comment = await CommentService.addComment({
       post: req.body.postId,
       user: req.user._id,
-      comment: req.body.comment,
+      text: req.body.comment,
       parent: req.body.parent,
     });
     res.json(comment).status(200);

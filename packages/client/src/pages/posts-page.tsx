@@ -1,8 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { postsRequest } from '../modules/posts/actions';
 import { RootState } from '../modules/reducers';
+import { selectPosts } from '../modules/posts/selectors';
 import useLoading from '../hooks/useLoading';
 
 import PostList from '../components/post-list';
@@ -11,7 +13,10 @@ import { Post } from '../modules/posts/types';
 
 export default function PostsPage() {
   const dispatch = useDispatch();
-  const posts = useSelector((state: RootState) => state.posts);
+  const posts = useSelector((state: RootState) =>
+    selectPosts(state.news.posts),
+  );
+
   const isLoading = useLoading('posts');
 
   React.useEffect(() => {
@@ -24,8 +29,12 @@ export default function PostsPage() {
 
   return (
     <PostList>
-      {posts.data.length &&
-        posts.data.map((post: Post) => <PostItem key={post._id} post={post} />)}
+      {posts.length &&
+        posts.map((post: Post) => (
+          <Link key={post._id} to={`/post/${post._id}`}>
+            <PostItem post={post} />
+          </Link>
+        ))}
     </PostList>
   );
 }

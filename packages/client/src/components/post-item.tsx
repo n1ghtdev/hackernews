@@ -9,7 +9,7 @@ export default function PostItem(props: Props) {
   const { post } = props;
   return (
     <article>
-      {post.title} - {post.author.name}
+      {post.title} - {post.author?.name}
     </article>
   );
 }

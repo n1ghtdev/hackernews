@@ -19,13 +19,10 @@ const UserSchema = new mongoose.Schema({
     min: 6,
     max: 1024,
   },
-  salt: String,
   role: {
     type: String,
     default: 'user',
   },
-  news: [{ type: mongoose.Schema.Types.ObjectId, ref: 'News' }],
-  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
 });
 
 export default mongoose.model('User', UserSchema);

@@ -12,31 +12,11 @@ const NewsSchema = new mongoose.Schema(
     },
     source: String,
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
-    commentsCount: {
-      type: Number,
-      default: 0,
-    },
   },
   {
     timestamps: true,
   },
 );
-
-NewsSchema.pre('save', function (next) {
-  const postId = this._id;
-  const authorId = this.author;
-
-  try {
-    this.model('User').updateOne(
-      { _id: authorId },
-      { $push: { news: postId } },
-      next,
-    );
-  } catch (error) {
-    next(error);
-  }
-});
 
 NewsSchema.pre('deleteOne', { document: true }, function (next) {
   const postId = this._id;

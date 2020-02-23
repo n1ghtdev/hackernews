@@ -1,6 +1,4 @@
 import CommentModel from '../models/comment';
-import NewsModel from '../models/news';
-import UserModel from '../models/user';
 
 export class CommentService {
   static async getByPostId(id) {
@@ -16,30 +14,14 @@ export class CommentService {
   }
 
   static async addComment(data) {
-    const commentRecord = new CommentModel(data).save(async (err, doc) => {
-      if (err) {
-        throw new Error(err.message);
+    const commentRecord = new CommentModel(data);
+    return commentRecord.save(async (err, doc) => {
+      if (doc.parent) {
+        await CommentModel.updateOne(
+          { _id: doc.parent },
+          { $push: { children: doc._id } },
+        );
       }
-      // TODO: do not count replies to commentsCount?
-      await NewsModel.updateOne(
-        {
-          _id: doc.post,
-        },
-        { $push: { comments: doc._id }, $inc: { commentsCount: 1 } },
-      );
-
-      await UserModel.updateOne(
-        {
-          _id: doc.user,
-        },
-        {
-          $push: {
-            comments: doc._id,
-          },
-        },
-      );
     });
-
-    return commentRecord;
   }
 }

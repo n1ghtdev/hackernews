@@ -6,7 +6,7 @@ import { State, Post, Comment } from './types';
 
 const initialState: State = {
   posts: {},
-  post: { _id: '', title: '', points: 0, source: '' },
+  post: { _id: '', title: '', points: 0, source: '', comments: [] },
 };
 
 const posts = (state: any, action: AnyAction) => {

@@ -18,6 +18,8 @@
 
 #### client
 
+20:40 20/02/20 - post-page
+
 - [x] redux
   - [x] user module
   - [x] posts module

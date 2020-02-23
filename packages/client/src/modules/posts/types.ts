@@ -5,6 +5,7 @@ export type Post = {
   title: string;
   points: number;
   source: string;
+  comments: any[];
   author?: User;
 };
 
