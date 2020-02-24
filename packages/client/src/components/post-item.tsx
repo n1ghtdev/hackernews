@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import TimeAgo from 'react-timeago';
 import { Post } from '../modules/posts/types';
 
 type Props = {
@@ -45,7 +46,8 @@ export default function PostItem(props: Props) {
       <Info>
         <span>
           {post.points} points by {post.author?.name || 'anonymous'} at{' '}
-          {post.createdAt} {'|'} {post.comments?.length} comments
+          <TimeAgo date={post.createdAt || Date.now()} /> {'|'}{' '}
+          {post.comments?.length || '0'} comments
         </span>
       </Info>
     </Wrapper>

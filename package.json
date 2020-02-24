@@ -16,8 +16,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/react-timeago": "^4.1.1",
     "husky": "^4.2.3",
     "lerna": "^3.20.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "react-timeago": "^4.4.0"
+  }
 }
