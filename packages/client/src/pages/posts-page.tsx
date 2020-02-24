@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import { postsRequest } from '../modules/posts/actions';
 import { RootState } from '../modules/reducers';
@@ -30,11 +29,7 @@ export default function PostsPage() {
   return (
     <PostList>
       {posts.length &&
-        posts.map((post: Post) => (
-          <Link key={post._id} to={`/post/${post._id}`}>
-            <PostItem post={post} />
-          </Link>
-        ))}
+        posts.map((post: Post) => <PostItem key={post._id} post={post} />)}
     </PostList>
   );
 }

@@ -7,6 +7,8 @@ export type Post = {
   source: string;
   comments: any[];
   author?: User;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type PostList = {

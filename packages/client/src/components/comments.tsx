@@ -1,20 +1,18 @@
 import React from 'react';
+import styled from 'styled-components';
+import Comment from './comment';
 
-function Comment({ comment }: { comment: any }) {
-  return (
-    <>
-      <li>{comment.comment}</li>
-      {comment.comments ? <Comments comments={comment.comments} /> : null}
-    </>
-  );
-}
+const Wrapper = styled.ul`
+  list-style-type: none;
+  margin-bottom: 20px;
+`;
 
 export default function Comments({ comments }: { comments: any }) {
   return (
-    <ul>
+    <Wrapper>
       {comments.map((comment: any) => (
         <Comment comment={comment} />
       ))}
-    </ul>
+    </Wrapper>
   );
 }

@@ -1,8 +1,14 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+
 import { saveUser } from './modules/user/actions';
 import { RootState } from './modules/reducers';
+import { GlobalStyles } from './styles/global-styles';
+import { theme } from './styles/theme';
+import Layout from './components/layout';
+
 import PostsPage from './pages/posts-page';
 import PostPage from './pages/post-page';
 
@@ -16,10 +22,15 @@ function App() {
   //   dispatch(saveUser(user));
   // }, [dispatch]);
   return (
-    <Switch>
-      <Route exact path="/" component={PostsPage} />
-      <Route exact path="/post/:id" component={PostPage} />
-    </Switch>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <Switch>
+        <Layout>
+          <Route exact path="/" component={PostsPage} />
+          <Route exact path="/post/:id" component={PostPage} />
+        </Layout>
+      </Switch>
+    </ThemeProvider>
   );
 }
 
