@@ -21,7 +21,8 @@ export class NewsService {
     try {
       const record = await NewsModel.findOne({
         _id: id,
-      });
+      }).populate({ path: 'author', select: '_id, name, role' });
+
       const comments = await CommentModel.find({
         post: id,
         parent: null,
@@ -43,7 +44,7 @@ export class NewsService {
   static async findAll() {
     try {
       const records = await NewsModel.find()
-        .populate('author')
+        .populate({ path: 'author', select: '_id, name, role' })
         .exec();
 
       if (!records) {
