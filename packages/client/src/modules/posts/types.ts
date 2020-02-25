@@ -5,10 +5,10 @@ export type Post = {
   title: string;
   points: number;
   source: string;
-  comments: any[];
-  author?: User;
-  createdAt?: string;
-  updatedAt?: string;
+  comments: Comment[] | string[];
+  author: User;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type PostList = {
@@ -21,5 +21,5 @@ export type Comment = {
 
 export type State = {
   posts: PostList;
-  post: Post;
+  post: Post | null;
 };

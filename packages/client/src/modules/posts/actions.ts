@@ -1,4 +1,3 @@
-// import { action } from 'typesafe-actions';
 import { Post } from './types';
 import * as types from './constants';
 import { getPosts, getPost, addPost, getComments } from '../../api';
@@ -16,7 +15,7 @@ export function postsRequest(): ThunkAction<
     dispatch({ type: types.POSTS_REQUEST });
     try {
       const data = await getPosts();
-      dispatch(postsSuccess(data as Post[]));
+      dispatch(postsSuccess(data));
     } catch (err) {
       dispatch(postsFailure(err.message));
     }
@@ -42,13 +41,12 @@ export function postRequest(
     dispatch({ type: types.POST_REQUEST });
     try {
       const data = await getPost(id);
-      dispatch(postSuccess(data as Post));
+      dispatch(postSuccess(data));
     } catch (err) {
       dispatch(postFailure(err.message));
     }
   };
 }
-
 export const postSuccess = (payload: Post) => ({
   type: types.POST_SUCCESS,
   payload,
@@ -66,7 +64,7 @@ export function addPostRequest(
     dispatch({ type: types.ADD_POST_REQUEST });
     try {
       const data = await addPost(payload);
-      dispatch(addPostSuccess(data as Post));
+      dispatch(addPostSuccess(data));
     } catch (err) {
       dispatch(addPostFailure(err.message));
     }

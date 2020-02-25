@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postRequest } from '../modules/posts/actions';
 import { RootState } from '../modules/reducers';
 import useLoading from '../hooks/useLoading';
-import Comments from '../components/comments';
+import SinglePostItem from '../components/single-post-item';
 
 export default function PostPage() {
   const dispatch = useDispatch();
@@ -23,12 +23,6 @@ export default function PostPage() {
   if (isLoading) {
     return null;
   }
-  console.log(post);
 
-  return (
-    <>
-      <div>{post.title}</div>
-      <Comments comments={post.comments} />
-    </>
-  );
+  return post ? <SinglePostItem post={post} /> : null;
 }

@@ -6,7 +6,7 @@ import { State, Post, Comment } from './types';
 
 const initialState: State = {
   posts: {},
-  post: { _id: '', title: '', points: 0, source: '', comments: [] },
+  post: null,
 };
 
 const posts = (state: any, action: AnyAction) => {
@@ -16,7 +16,6 @@ const posts = (state: any, action: AnyAction) => {
       action.payload.forEach((post: Post) => {
         newState[post._id] = post;
       });
-      console.log(newState);
 
       return newState;
     case types.ADD_POST_SUCCESS:
@@ -79,7 +78,7 @@ const post = (state: any, action: AnyAction) => {
   }
 };
 
-const reducer: Reducer<State> = (state = initialState, action) =>
+const reducer = (state: State = initialState, action: AnyAction) =>
   produce(state, draft => {
     switch (action.type) {
       case types.POSTS_SUCCESS:

@@ -1,46 +1,10 @@
+import { Post, Comment } from '../modules/posts/types';
+
 const API_URL = '/api';
 const POST_API = `${API_URL}/news`;
 const AUTH_API = `${API_URL}/auth`;
 const USER_API = `${API_URL}/user`;
 const COMMENT_API = `${API_URL}/comment`;
-
-interface Post {
-  title: string;
-  source: string;
-}
-
-interface RequestedPost extends Post {
-  id: string;
-  points: number;
-  author: User;
-  comments: Comment[];
-}
-
-interface User {
-  name: string;
-}
-
-interface Comment {
-  comment: string;
-  user: User;
-  comments: Comment[];
-}
-
-/**
- * posts:
- *  -> GET news
- *  -> GET news/:id
- *  -> POST news
- *  -> DELETE news (body.id)
- * auth:
- *  -> POST signup
- *  -> POST signin
- * user:
- *  -> GET user/:id
- * comment:
- *  -> POST comment (body: {postId, comment})
- *  -> POST comment/reply (body: {postId, comment, commentId})
- */
 
 const defaultHeaders = { 'content-type': 'application/json' };
 
@@ -76,12 +40,12 @@ async function post<T>(
 }
 
 export async function getPosts() {
-  const posts = await get(POST_API);
+  const posts = await get<Post[]>(POST_API);
   return posts;
 }
 
 export async function getPost(id: string) {
-  const post = await get(`${POST_API}/${id}`);
+  const post = await get<Post>(`${POST_API}/${id}`);
   return post;
 }
 
@@ -92,7 +56,7 @@ export async function addPost(data: any) {
 
   const headers = { ...defaultHeaders, authorization: `Bearer ${token}` };
 
-  const posted = await post(`${POST_API}`, data, headers);
+  const posted = await post<Partial<Post>>(`${POST_API}`, data, headers);
   return posted;
 }
 
