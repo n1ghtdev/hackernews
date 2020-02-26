@@ -1,6 +1,6 @@
-import { Post } from './types';
+import { Post, Comment } from './types';
 import * as types from './constants';
-import { getPosts, getPost, addPost, getComments } from '../../api';
+import { getPosts, getPost, addPost, addComment } from '../../api';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../reducers';
@@ -81,26 +81,50 @@ export const addPostFailure = (error: string) => ({
   error,
 });
 
-export function getCommentsByPostId(
-  id: string,
+// export function getCommentsByPostId(
+//   id: string,
+// ): ThunkAction<void, RootState, unknown, Action<string>> {
+//   return async dispatch => {
+//     dispatch({ type: types.COMMENTS_REQUEST });
+//     try {
+//       const data = await getComments(id);
+//       dispatch(addPostSuccess(data));
+//     } catch (err) {
+//       dispatch(addPostFailure(err.message));
+//     }
+//   };
+// }
+
+// export const commentsSuccess = (payload: any) => ({
+//   type: types.COMMENTS_SUCCESS,
+//   payload,
+// });
+
+// export const commentsFailure = (error: string) => ({
+//   type: types.COMMENTS_FAILURE,
+//   error,
+// });
+
+export function addCommentRequest(
+  comment: Partial<Comment>,
 ): ThunkAction<void, RootState, unknown, Action<string>> {
   return async dispatch => {
-    dispatch({ type: types.COMMENTS_REQUEST });
+    dispatch({ type: types.ADD_COMMENT_REQUEST });
     try {
-      const data = await getComments(id);
-      dispatch(addPostSuccess(data));
+      const data = await addComment(comment);
+      dispatch(addCommentSuccess(data));
     } catch (err) {
-      dispatch(addPostFailure(err.message));
+      dispatch(addCommentFailure(err.message));
     }
   };
 }
 
-export const commentsSuccess = (payload: any) => ({
-  type: types.COMMENTS_SUCCESS,
+export const addCommentSuccess = (payload: Comment) => ({
+  type: types.ADD_COMMENT_SUCCESS,
   payload,
 });
 
-export const commentsFailure = (error: string) => ({
-  type: types.COMMENTS_FAILURE,
+export const addCommentFailure = (error: string) => ({
+  type: types.ADD_COMMENT_FAILURE,
   error,
 });

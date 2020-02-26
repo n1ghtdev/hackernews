@@ -1,6 +1,5 @@
 import { AnyAction } from 'redux';
 import produce from 'immer';
-import { Reducer } from 'redux';
 import * as types from './constants';
 import { State, Post, Comment } from './types';
 
@@ -60,12 +59,10 @@ const post = (state: any, action: AnyAction) => {
       }
       return state;
     case types.ADD_COMMENT_SUCCESS: {
-      const comment = { [action.paylod._id]: action.payload };
-      return { ...state, comments: [...state.comments, comment] };
+      return { ...state, comments: [...state.comments, action.payload] };
     }
     case types.UPDATE_COMMENT_SUCCESS: {
-      const comment = { [action.paylod._id]: action.payload };
-      return { ...state, comments: [...state.comments, comment] };
+      return { ...state, comments: [...state.comments, action.payload] };
     }
     case types.DELETE_COMMENT_SUCCESS: {
       const filteredComments = state.comments.filter(

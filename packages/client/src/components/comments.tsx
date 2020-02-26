@@ -4,7 +4,10 @@ import Comment from './comment';
 
 const Wrapper = styled.ul`
   list-style-type: none;
-  margin-bottom: 20px;
+  padding-left: 5px;
+  & > li > ul {
+    padding-left: 30px;
+  }
 `;
 
 export default function Comments({ comments }: { comments: any }) {

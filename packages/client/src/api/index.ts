@@ -49,7 +49,7 @@ export async function getPost(id: string) {
   return post;
 }
 
-export async function addPost(data: any) {
+export async function addPost(data: Partial<Post>) {
   // TODO: util function to get token from localStorage
   const user = localStorage.getItem('user');
   const token = user && JSON.parse(user).token;
@@ -57,6 +57,16 @@ export async function addPost(data: any) {
   const headers = { ...defaultHeaders, authorization: `Bearer ${token}` };
 
   const posted = await post<Partial<Post>>(`${POST_API}`, data, headers);
+  return posted;
+}
+
+export async function addComment(data: Partial<Comment>) {
+  const user = localStorage.getItem('user');
+  const token = user && JSON.parse(user).token;
+
+  const headers = { ...defaultHeaders, authorization: `Bearer ${token}` };
+
+  const posted = await post<Partial<Comment>>(`${COMMENT_API}`, data, headers);
   return posted;
 }
 

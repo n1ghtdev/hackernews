@@ -29,7 +29,9 @@ export default function PostsPage() {
   return (
     <PostList>
       {posts.length &&
-        posts.map((post: Post) => <PostItem key={post._id} post={post} />)}
+        posts.map((post: Post, index: number) => (
+          <PostItem key={post._id} index={index + 1} post={post} />
+        ))}
     </PostList>
   );
 }

@@ -6,11 +6,11 @@ import { Post } from '../modules/posts/types';
 
 type Props = {
   post: Post;
+  index?: number;
 };
 
 const Wrapper = styled.article`
   padding: 5px;
-  background-color: #ddd;
 `;
 
 const Title = styled.h2`
@@ -34,10 +34,11 @@ const Info = styled.div`
 `;
 
 export default function PostItem(props: Props) {
-  const { post } = props;
+  const { post, index } = props;
   return (
     <Wrapper>
       <Title>
+        {index ? <span>{index}. </span> : null}
         <Link to={`/post/${post._id}`}>{post.title}</Link>
         <Source href={post.source} target="_blank" rel="noopener noreferrer">
           ({post.source})
@@ -46,8 +47,8 @@ export default function PostItem(props: Props) {
       <Info>
         <span>
           {post.points} points by {post.author?.name || 'anonymous'} at{' '}
-          <TimeAgo date={post.createdAt || Date.now()} /> {'|'}{' '}
-          {post.comments?.length} comments
+          <TimeAgo date={post.createdAt} /> {'|'} {post.comments?.length}{' '}
+          comments
         </span>
       </Info>
     </Wrapper>
