@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postsRequest } from '../modules/posts/actions';
 import { RootState } from '../modules/reducers';
 import { selectPosts } from '../modules/posts/selectors';
-import useLoading from '../hooks/useLoading';
+import useLoading from '../hooks/use-loading';
 
 import PostList from '../components/post-list';
 import PostItem from '../components/post-item';

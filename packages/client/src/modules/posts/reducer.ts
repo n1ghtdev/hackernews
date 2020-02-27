@@ -25,6 +25,7 @@ const posts = (state: any, action: AnyAction) => {
       break;
     case types.ADD_COMMENT_SUCCESS:
       const { post } = action.payload;
+
       return {
         ...state,
         [post]: {

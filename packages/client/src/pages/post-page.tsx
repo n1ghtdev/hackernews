@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { postRequest } from '../modules/posts/actions';
 import { RootState } from '../modules/reducers';
-import useLoading from '../hooks/useLoading';
+import useLoading from '../hooks/use-loading';
 import SinglePostItem from '../components/single-post-item';
 
 export default function PostPage() {

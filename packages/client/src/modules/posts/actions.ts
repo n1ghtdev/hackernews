@@ -81,30 +81,6 @@ export const addPostFailure = (error: string) => ({
   error,
 });
 
-// export function getCommentsByPostId(
-//   id: string,
-// ): ThunkAction<void, RootState, unknown, Action<string>> {
-//   return async dispatch => {
-//     dispatch({ type: types.COMMENTS_REQUEST });
-//     try {
-//       const data = await getComments(id);
-//       dispatch(addPostSuccess(data));
-//     } catch (err) {
-//       dispatch(addPostFailure(err.message));
-//     }
-//   };
-// }
-
-// export const commentsSuccess = (payload: any) => ({
-//   type: types.COMMENTS_SUCCESS,
-//   payload,
-// });
-
-// export const commentsFailure = (error: string) => ({
-//   type: types.COMMENTS_FAILURE,
-//   error,
-// });
-
 export function addCommentRequest(
   comment: Partial<Comment>,
 ): ThunkAction<void, RootState, unknown, Action<string>> {

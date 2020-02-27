@@ -24,10 +24,6 @@ export const DELETE_POST_FAILURE = 'delete-post/failure';
 
 /* COMMENTS */
 
-export const COMMENTS_REQUEST = 'comments/request';
-export const COMMENTS_SUCCESS = 'comments/success';
-export const COMMENTS_FAILURE = 'comments/failure';
-
 export const ADD_COMMENT_REQUEST = 'add-comment/request';
 export const ADD_COMMENT_SUCCESS = 'add-comment/success';
 export const ADD_COMMENT_FAILURE = 'add-comment/failure';
