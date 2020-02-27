@@ -1,5 +1,7 @@
+import baseStyled, { ThemedStyledInterface } from 'styled-components';
+
 export const theme = {
-  primary: '',
+  primary: 'orange',
   secondary: '',
   warning: '#FAC661',
   error: '#F47961',
@@ -8,3 +10,6 @@ export const theme = {
   text: '#000',
   textAccent: '#5f5f5f',
 };
+
+export type Theme = typeof theme;
+export const styled = baseStyled as ThemedStyledInterface<Theme>;

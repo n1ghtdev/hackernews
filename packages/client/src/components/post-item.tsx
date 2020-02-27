@@ -18,7 +18,7 @@ const Title = styled.h2`
   font-size: 14px;
   font-weight: normal;
   a {
-    color: ${({ theme }: { theme: any }) => theme.text};
+    color: ${({ theme }) => theme.text};
   }
   margin-bottom: 5px;
 `;
@@ -30,7 +30,7 @@ const Source = styled.a`
 
 const Info = styled.div`
   font-size: 12px;
-  color: ${({ theme }: { theme: any }) => theme.textAccent};
+  color: ${({ theme }) => theme.textAccent};
 `;
 
 export default function PostItem(props: Props) {
