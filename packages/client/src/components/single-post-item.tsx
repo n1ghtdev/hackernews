@@ -17,9 +17,9 @@ export default function SinglePostItem(props: Props) {
     <>
       <PostItem post={props.post} />
       <AddCommentForm
-        onAddComment={(text: string) =>
-          dispatch(addCommentRequest({ post: props.post._id, text }))
-        }
+        onAddComment={(text: string) => {
+          dispatch(addCommentRequest({ post: props.post._id, text }));
+        }}
       />
       <Comments comments={props.post.comments} />
     </>

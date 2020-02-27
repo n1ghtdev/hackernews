@@ -9,7 +9,7 @@ const Wrapper = styled.li`
 
 const Header = styled.div`
   font-size: 12px;
-  color: ${({ theme }: { theme: any }) => theme.textAccent};
+  color: ${({ theme }) => theme.textAccent};
   margin-bottom: 5px;
 `;
 
@@ -23,8 +23,8 @@ export default function Comment({ comment }: { comment: any }) {
       <Header>
         {comment.user.name} <TimeAgo date={comment.createdAt} />
       </Header>
-      <Body>{comment.comment}</Body>
-      {comment.comments ? <Comments comments={comment.comments} /> : null}
+      <Body>{comment.text}</Body>
+      {comment.children ? <Comments comments={comment.children} /> : null}
     </Wrapper>
   );
 }
