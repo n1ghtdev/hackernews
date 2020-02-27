@@ -18,7 +18,9 @@ const Nav = styled.ul`
 `;
 const NavItem = styled.li`
   font-size: 14px;
+  margin-right: 20px;
   &:last-child {
+    margin-right: 0;
     flex: 1;
     text-align: right;
   }
@@ -58,13 +60,20 @@ export default function Header() {
             <Title>Hacker News Clone</Title>
           </NavLink>
         </NavItem>
-        <NavItem>
-          {isSignedIn ? (
+        {!isSignedIn ? (
+          <NavItem>
             <NavLink to="/auth">signup/signin</NavLink>
-          ) : (
-            <Logout onClick={onLogout}>logout</Logout>
-          )}
-        </NavItem>
+          </NavItem>
+        ) : (
+          <>
+            <NavItem>
+              <NavLink to="/post/add">add new post</NavLink>
+            </NavItem>
+            <NavItem>
+              <Logout onClick={onLogout}>logout</Logout>
+            </NavItem>
+          </>
+        )}
       </Nav>
     </Wrapper>
   );

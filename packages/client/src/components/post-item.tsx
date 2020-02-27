@@ -47,8 +47,8 @@ export default function PostItem(props: Props) {
       <Info>
         <span>
           {post.points} points by {post.author?.name || 'anonymous'} at{' '}
-          <TimeAgo date={post.createdAt} /> {'|'} {post.comments?.length}{' '}
-          comments
+          <TimeAgo date={post.createdAt} live={false} /> {'|'}{' '}
+          {post.comments?.length} comments
         </span>
       </Info>
     </Wrapper>

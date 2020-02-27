@@ -21,7 +21,7 @@ export default function Comment({ comment }: { comment: any }) {
   return (
     <Wrapper>
       <Header>
-        {comment.user.name} <TimeAgo date={comment.createdAt} />
+        {comment.user.name} <TimeAgo date={comment.createdAt} live={false} />
       </Header>
       <Body>{comment.text}</Body>
       {comment.children ? <Comments comments={comment.children} /> : null}

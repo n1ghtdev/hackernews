@@ -7,24 +7,26 @@
 - [x] auth with jwt
 - [x] protected routes
 - [x] user/news relation (mongo refs)
-- [x] add post id to user news array with mongo pre hook (prev('save'))
-- [x] add user/post comments
-- [x] deep population post comments (n-level)
 - [ ] delete post/comments relation (also delete from user posts/comments)
-- [ ] posts pagination
-- [ ] logger
-- [ ] use post slug instead of id
 - [ ] validate new post
+- [ ] posts pagination
+- [ ] use post slug instead of id
+- [ ] logger
 
 #### client
-
-20:40 20/02/20 - post-page
 
 - [x] redux
   - [x] user module
   - [x] posts module
 - [x] posts page
-- [ ] auth page
-- [ ] user page
 - [ ] post page
-- [ ] add new post page
+  - [x] comments
+  - [x] comment add form
+  - [ ] comment add reply form
+- [x] auth page
+- [ ] post and comment points
+- [ ] user page
+- [x] add new post page
+  - [ ] private route
+- [ ] 404 page
+- [ ] dark theme

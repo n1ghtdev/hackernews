@@ -58,7 +58,7 @@ export const postFailure = (error: string) => ({
 });
 
 export function addPostRequest(
-  payload: Post,
+  payload: Partial<Post>,
 ): ThunkAction<void, RootState, unknown, Action<string>> {
   return async dispatch => {
     dispatch({ type: types.ADD_POST_REQUEST });

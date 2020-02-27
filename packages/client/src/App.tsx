@@ -9,6 +9,7 @@ import Header from './components/header';
 
 import PostsPage from './pages/posts-page';
 import PostPage from './pages/post-page';
+import AddPostPage from './pages/add-post-page';
 import AuthPage from './pages/auth-page';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Layout>
           <Header />
           <Route exact path="/" component={PostsPage} />
+          <Route exact path="/post/add" component={AddPostPage} />
           <Route exact path="/post/:id" component={PostPage} />
           <Route exact path="/auth" component={AuthPage} />
         </Layout>
