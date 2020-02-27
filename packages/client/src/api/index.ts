@@ -71,7 +71,7 @@ export async function addComment(data: Partial<Comment>) {
 }
 
 export async function signUp(data: any) {
-  logout();
+  clearUser();
 
   const signedUp = await post(`${AUTH_API}/signup`, data);
   localStorage.setItem('user', JSON.stringify(signedUp));
@@ -80,7 +80,7 @@ export async function signUp(data: any) {
 }
 
 export async function signIn(data: any) {
-  logout();
+  clearUser();
 
   const signedIn = await post(`${AUTH_API}/signin`, data);
   localStorage.setItem('user', JSON.stringify(signedIn));
@@ -88,7 +88,7 @@ export async function signIn(data: any) {
   return signedIn;
 }
 
-export function logout() {
+export function clearUser() {
   const currentUser = localStorage.getItem('user');
   if (currentUser) localStorage.removeItem('user');
 }
