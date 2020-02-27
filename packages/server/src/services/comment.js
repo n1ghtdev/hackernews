@@ -1,4 +1,5 @@
 import CommentModel from '../models/comment';
+import NewsModel from '../models/news';
 
 export class CommentService {
   static async getByPostId(id) {
@@ -15,13 +16,24 @@ export class CommentService {
 
   static async addComment(data) {
     const commentRecord = new CommentModel(data);
-    return commentRecord.save(async (err, doc) => {
+
+    if (!commentRecord) {
+      throw new Error('Cannot post comment');
+    }
+
+    await commentRecord.save(async (err, doc) => {
       if (doc.parent) {
         await CommentModel.updateOne(
           { _id: doc.parent },
           { $push: { children: doc._id } },
         );
       }
+      await NewsModel.updateOne(
+        { _id: doc.post },
+        { $push: { comments: doc._id } },
+      );
     });
+
+    return commentRecord;
   }
 }

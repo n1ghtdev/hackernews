@@ -21,14 +21,14 @@ export class NewsService {
     try {
       const record = await NewsModel.findOne({
         _id: id,
-      }).populate({ path: 'author', select: '_id, name, role' });
+      }).populate({ path: 'author', select: '_id, name' });
 
       const comments = await CommentModel.find({
         post: id,
         parent: null,
       }).populate({
         path: 'user',
-        select: '_id, name, role',
+        select: '_id, name',
       });
       if (!record) {
         throw new Error('Not Found');
@@ -50,6 +50,7 @@ export class NewsService {
       if (!records) {
         throw new Error('Not Found');
       }
+      console.log(records);
 
       return records;
     } catch (error) {

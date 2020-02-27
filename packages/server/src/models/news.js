@@ -12,6 +12,9 @@ const NewsSchema = new mongoose.Schema(
     },
     source: String,
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    comments: [
+      { type: mongoose.Schema.Types.ObjectId, ref: 'Comment', default: [] },
+    ],
   },
   {
     timestamps: true,

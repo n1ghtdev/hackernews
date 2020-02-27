@@ -16,9 +16,9 @@ router.get('/:postId', async (req, res, next) => {
 router.post('/', isAuth, async (req, res, next) => {
   try {
     const comment = await CommentService.addComment({
-      post: req.body.postId,
+      post: req.body.post,
       user: req.user._id,
-      text: req.body.comment,
+      text: req.body.text,
       parent: req.body.parent,
     });
     res.json(comment).status(200);
