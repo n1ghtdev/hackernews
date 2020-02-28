@@ -6,6 +6,7 @@ import { GlobalStyles } from './styles/global-styles';
 import { theme } from './styles/theme';
 import Layout from './components/layout';
 import Header from './components/header';
+import PrivateRoute from './components/private-route';
 
 import PostsPage from './pages/posts-page';
 import PostPage from './pages/post-page';
@@ -20,7 +21,7 @@ function App() {
         <Layout>
           <Header />
           <Route exact path="/" component={PostsPage} />
-          <Route exact path="/post/add" component={AddPostPage} />
+          <PrivateRoute exact path="/post/add" component={AddPostPage} />
           <Route exact path="/post/:id" component={PostPage} />
           <Route exact path="/auth" component={AuthPage} />
         </Layout>
