@@ -2,6 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import Comment from './comment';
 
+type Props = {
+  comments: any;
+  postId: string;
+};
+
 const Wrapper = styled.ul`
   list-style-type: none;
   padding-left: 5px;
@@ -10,11 +15,12 @@ const Wrapper = styled.ul`
   }
 `;
 
-export default function Comments({ comments }: { comments: any }) {
+export default function Comments(props: Props) {
+  const { comments, postId } = props;
   return (
     <Wrapper>
       {comments.map((comment: any) => (
-        <Comment comment={comment} />
+        <Comment comment={comment} postId={postId} />
       ))}
     </Wrapper>
   );

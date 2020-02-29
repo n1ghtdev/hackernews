@@ -21,7 +21,7 @@ export default function SinglePostItem(props: Props) {
           dispatch(addCommentRequest({ post: props.post._id, text }));
         }}
       />
-      <Comments comments={props.post.comments} />
+      <Comments comments={props.post.comments} postId={props.post._id} />
     </>
   );
 }
