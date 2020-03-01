@@ -27,6 +27,10 @@
 - [x] auth page
 - [x] add new post page
   - [x] private route
+- [ ] error handling
+  - [ ] handle redux store errors
+  - [ ] handle fetch api error
+  - [ ] handle react components error
 - [ ] post and comment points
 - [ ] user page
 - [ ] 404 page
