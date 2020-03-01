@@ -1,6 +1,7 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import path from 'path';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
 
@@ -20,8 +21,15 @@ mongoose.connect(config.db, {
   useUnifiedTopology: true,
 });
 
-// TODO: express.json()
-app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  }),
+);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
 app.use('/api/news', news);

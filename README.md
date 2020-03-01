@@ -7,6 +7,7 @@
 - [x] auth with jwt
 - [x] protected routes
 - [x] user/news relation (mongo refs)
+- [ ] add refresh token and store it in cookies
 - [ ] delete post/comments relation (also delete from user posts/comments)
 - [ ] validate new post
 - [ ] posts pagination
