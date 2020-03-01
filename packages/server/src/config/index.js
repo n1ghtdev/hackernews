@@ -11,5 +11,6 @@ if (!envFound) {
 
 export default {
   jwtSecret: process.env.JWT_SECRET,
+  jwtRefreshSecret: process.env.REFRESH_JWT_SECRET,
   db: process.env.DATABASE,
 };

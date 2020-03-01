@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { AuthService } from '../services/auth';
 import { signUpValidation, signInValidation } from '../validators/auth';
+import { sendRefreshToken } from './utils/sendRefreshToken';
 
 const router = Router();
 
@@ -14,8 +15,12 @@ router.post('/signup', async (req, res, next) => {
   }
 
   try {
-    const { user, token } = await AuthService.SignUp(req.body);
-    res.status(201).json({ user, token });
+    const { user, accessToken, refreshToken } = await AuthService.SignUp(
+      req.body,
+    );
+
+    sendRefreshToken(res, refreshToken);
+    return res.send({ user, accessToken }).status(201);
   } catch (err) {
     next(err);
   }
@@ -30,11 +35,37 @@ router.post('/signin', async (req, res, next) => {
   }
 
   try {
-    const { user, token } = await AuthService.SignIn(
+    const { user, accessToken, refreshToken } = await AuthService.SignIn(
       req.body.email,
       req.body.password,
     );
-    res.json({ user, token }).status(200);
+
+    sendRefreshToken(res, refreshToken);
+    return res.send({ user, accessToken }).status(200);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post('/logout', (req, res) => {
+  res.clearCookie('refreshToken', { path: '/api/auth/refresh-token' });
+  return res.send({ message: 'Logged out' }).status(200);
+});
+
+router.post('/refresh-token', async (req, res, next) => {
+  const token = req.cookies.refreshToken;
+
+  if (!token) {
+    return res.status(401).send({ message: 'Session Expired' });
+  }
+
+  try {
+    const { user, accessToken, refreshToken } = await AuthService.updateTokens(
+      token,
+    );
+
+    sendRefreshToken(res, refreshToken);
+    return res.send({ user, accessToken }).status(200);
   } catch (err) {
     next(err);
   }

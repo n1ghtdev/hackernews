@@ -19,6 +19,7 @@ const UserSchema = new mongoose.Schema({
     min: 6,
     max: 1024,
   },
+  refreshToken: String,
   role: {
     type: String,
     default: 'user',

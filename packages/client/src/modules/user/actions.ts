@@ -2,7 +2,7 @@ import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../reducers';
 import * as types from './constants';
-import { signIn, signUp, clearUser } from '../../api';
+import { signIn, signUp, logout, verifyAuth } from '../../api';
 
 export function signInRequest(
   user: any,
@@ -56,24 +56,57 @@ export const signUpFailure = (error: string) =>
     error,
   } as const);
 
-export function logoutAction(): ThunkAction<
+export function verifyRequest(): ThunkAction<
   void,
   RootState,
   unknown,
   Action<string>
 > {
-  return dispatch => {
-    clearUser();
-    dispatch({ type: types.LOGOUT });
+  return async dispatch => {
+    try {
+      const data = await verifyAuth();
+      dispatch(verifySuccess(data));
+    } catch (err) {
+      dispatch(verifyFailure(err));
+    }
   };
 }
 
-export function logout() {
+export function verifySuccess(data: any) {
+  return {
+    type: types.VERIFY_SUCCESS,
+    payload: data,
+  } as const;
+}
+
+export function verifyFailure(error: any) {
+  return {
+    type: types.VERIFY_FAILURE,
+    error,
+  } as const;
+}
+
+export function logoutRequest(): ThunkAction<
+  void,
+  RootState,
+  unknown,
+  Action<string>
+> {
+  return async dispatch => {
+    const loggedOut = await logout();
+    dispatch(logoutSuccess());
+  };
+}
+
+export function logoutSuccess() {
   return {
     type: types.LOGOUT,
   } as const;
 }
 
 export type ActionType = ReturnType<
-  typeof signInSuccess | typeof signUpSuccess | typeof logout
+  | typeof signInSuccess
+  | typeof signUpSuccess
+  | typeof logoutSuccess
+  | typeof verifySuccess
 >;

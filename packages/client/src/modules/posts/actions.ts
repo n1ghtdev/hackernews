@@ -60,10 +60,12 @@ export const postFailure = (error: string) => ({
 export function addPostRequest(
   payload: Partial<Post>,
 ): ThunkAction<void, RootState, unknown, Action<string>> {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const accessToken = getState().user.accessToken;
+
     dispatch({ type: types.ADD_POST_REQUEST });
     try {
-      const data = await addPost(payload);
+      const data = await addPost(payload, accessToken);
       dispatch(addPostSuccess(data));
     } catch (err) {
       dispatch(addPostFailure(err.message));
@@ -84,10 +86,12 @@ export const addPostFailure = (error: string) => ({
 export function addCommentRequest(
   comment: Partial<Comment>,
 ): ThunkAction<void, RootState, unknown, Action<string>> {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const accessToken = getState().user.accessToken;
+
     dispatch({ type: types.ADD_COMMENT_REQUEST });
     try {
-      const data = await addComment(comment);
+      const data = await addComment(comment, accessToken);
       dispatch(addCommentSuccess(data));
     } catch (err) {
       dispatch(addCommentFailure(err.message));

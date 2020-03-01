@@ -7,7 +7,7 @@
 - [x] auth with jwt
 - [x] protected routes
 - [x] user/news relation (mongo refs)
-- [ ] add refresh token and store it in cookies
+- [x] add refresh token and store it in cookies
 - [ ] delete post/comments relation (also delete from user posts/comments)
 - [ ] validate new post
 - [ ] posts pagination
@@ -20,14 +20,14 @@
   - [x] user module
   - [x] posts module
 - [x] posts page
-- [ ] post page
+- [x] post page
   - [x] comments
   - [x] comment add form
-  - [ ] comment add reply form
+  - [x] comment add reply form
 - [x] auth page
+- [x] add new post page
+  - [x] private route
 - [ ] post and comment points
 - [ ] user page
-- [x] add new post page
-  - [ ] private route
 - [ ] 404 page
 - [ ] dark theme

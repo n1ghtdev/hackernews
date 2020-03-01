@@ -1,6 +1,9 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
+import { useDispatch } from 'react-redux';
+
+import { verifyRequest } from './modules/user/actions';
 
 import { GlobalStyles } from './styles/global-styles';
 import { theme } from './styles/theme';
@@ -14,6 +17,12 @@ import AddPostPage from './pages/add-post-page';
 import AuthPage from './pages/auth-page';
 
 function App() {
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(verifyRequest());
+  }, [dispatch]);
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
@@ -21,7 +30,7 @@ function App() {
         <Layout>
           <Header />
           <Route exact path="/" component={PostsPage} />
-          <PrivateRoute exact path="/post/add" component={AddPostPage} />
+          <PrivateRoute exact path="/add-post" component={AddPostPage} />
           <Route exact path="/post/:id" component={PostPage} />
           <Route exact path="/auth" component={AuthPage} />
         </Layout>

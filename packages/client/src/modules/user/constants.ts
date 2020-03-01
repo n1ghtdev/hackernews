@@ -6,4 +6,8 @@ export const SIGN_UP_REQUEST = 'auth-signup/request';
 export const SIGN_UP_SUCCESS = 'auth-signup/success';
 export const SIGN_UP_FAILURE = 'auth-signup/failure';
 
+export const VERIFY_REQUEST = 'verify/request';
+export const VERIFY_SUCCESS = 'verify/success';
+export const VERIFY_FAILURE = 'verify/failure';
+
 export const LOGOUT = 'auth-logout';

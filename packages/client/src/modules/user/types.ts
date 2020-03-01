@@ -7,5 +7,6 @@ export type User = {
 
 export type State = {
   user: User;
+  accessToken: string;
   isAuth?: boolean;
 };

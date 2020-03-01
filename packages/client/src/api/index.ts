@@ -22,13 +22,14 @@ async function get<T>(url: string, headers: any = defaultHeaders): Promise<T> {
 
 async function post<T>(
   url: string,
-  body: any,
+  body?: any,
   headers: any = defaultHeaders,
 ): Promise<T> {
   const response = await fetch(url, {
     method: 'POST',
+    credentials: 'include',
     headers,
-    body: JSON.stringify(body),
+    body: body && JSON.stringify(body),
   });
   const json = await response.json();
 
@@ -49,21 +50,14 @@ export async function getPost(id: string) {
   return post;
 }
 
-export async function addPost(data: Partial<Post>) {
-  // TODO: util function to get token from localStorage
-  const user = localStorage.getItem('user');
-  const token = user && JSON.parse(user).token;
-
+export async function addPost(data: Partial<Post>, token: string) {
   const headers = { ...defaultHeaders, authorization: `Bearer ${token}` };
 
   const posted = await post<Partial<Post>>(`${POST_API}`, data, headers);
   return posted;
 }
 
-export async function addComment(data: Partial<Comment>) {
-  const user = localStorage.getItem('user');
-  const token = user && JSON.parse(user).token;
-
+export async function addComment(data: Partial<Comment>, token: string) {
   const headers = { ...defaultHeaders, authorization: `Bearer ${token}` };
 
   const posted = await post<Partial<Comment>>(`${COMMENT_API}`, data, headers);
@@ -71,26 +65,23 @@ export async function addComment(data: Partial<Comment>) {
 }
 
 export async function signUp(data: any) {
-  clearUser();
-
   const signedUp = await post(`${AUTH_API}/signup`, data);
-  localStorage.setItem('user', JSON.stringify(signedUp));
-
   return signedUp;
 }
 
 export async function signIn(data: any) {
-  clearUser();
-
   const signedIn = await post(`${AUTH_API}/signin`, data);
-  localStorage.setItem('user', JSON.stringify(signedIn));
-
   return signedIn;
 }
 
-export function clearUser() {
-  const currentUser = localStorage.getItem('user');
-  if (currentUser) localStorage.removeItem('user');
+export async function verifyAuth() {
+  const response = await post(`${AUTH_API}/refresh-token`);
+  return response;
+}
+
+export async function logout() {
+  const loggedOut = await post(`${AUTH_API}/logout`);
+  return loggedOut;
 }
 
 export async function getComments(postId: string) {

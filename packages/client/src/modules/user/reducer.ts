@@ -6,6 +6,7 @@ import { State, User } from './types';
 
 const initialState: State = {
   user: {} as User,
+  accessToken: '',
   isAuth: false,
 };
 
@@ -14,11 +15,14 @@ const reducer: Reducer<State> = (state = initialState, action: ActionType) =>
     switch (action.type) {
       case types.SIGN_IN_SUCCESS:
       case types.SIGN_UP_SUCCESS:
+      case types.VERIFY_SUCCESS:
         draft.user = action.payload.user;
+        draft.accessToken = action.payload.accessToken;
         draft.isAuth = true;
         break;
       case types.LOGOUT:
         draft.user = {} as User;
+        draft.accessToken = '';
         draft.isAuth = false;
         break;
       default:
