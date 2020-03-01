@@ -60,6 +60,19 @@ const post = (state: any, action: AnyAction) => {
       }
       return state;
     case types.ADD_COMMENT_SUCCESS: {
+      if (action.payload.parent) {
+        if (action.payload.parent) {
+          const parentComment = state.comments.find(
+            (comment: Comment) => comment._id === action.payload.parent,
+          );
+          parentComment.children.push(action.payload._id);
+          return {
+            ...state,
+            comments: [...state.comments, parentComment, action.payload],
+          };
+        }
+        return { ...state, comments: [...state.comments, action.payload] };
+      }
       return { ...state, comments: [...state.comments, action.payload] };
     }
     case types.UPDATE_COMMENT_SUCCESS: {

@@ -17,11 +17,17 @@ const Wrapper = styled.ul`
 
 export default function Comments(props: Props) {
   const { comments, postId } = props;
+  const filteredComments = comments.filter(
+    (comment: any) => comment.parent === null,
+  );
+
   return (
     <Wrapper>
-      {comments.map((comment: any) => (
-        <Comment comment={comment} postId={postId} />
-      ))}
+      {(filteredComments.length ? filteredComments : comments).map(
+        (comment: any) => (
+          <Comment comment={comment} postId={postId} />
+        ),
+      )}
     </Wrapper>
   );
 }

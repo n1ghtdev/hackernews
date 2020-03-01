@@ -25,7 +25,6 @@ export class NewsService {
 
       const comments = await CommentModel.find({
         post: id,
-        parent: null,
       }).populate({
         path: 'user',
         select: '_id, name',
@@ -44,13 +43,12 @@ export class NewsService {
   static async findAll() {
     try {
       const records = await NewsModel.find()
-        .populate({ path: 'author', select: '_id, name, role' })
+        .populate({ path: 'author', select: '_id, name' })
         .exec();
 
       if (!records) {
         throw new Error('Not Found');
       }
-      console.log(records);
 
       return records;
     } catch (error) {

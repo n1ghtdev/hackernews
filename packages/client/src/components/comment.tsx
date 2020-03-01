@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import TimeAgo from 'react-timeago';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../modules/reducers';
 import { addCommentRequest } from '../modules/posts/actions';
 import Comments from './comments';
 import AddCommentForm from './add-comment-form';
@@ -39,8 +40,15 @@ const ReplyButton = styled.button`
 
 export default function Comment(props: Props) {
   const dispatch = useDispatch();
-  const [reply, setReply] = React.useState(false);
   const { comment, postId } = props;
+
+  const replies = useSelector((state: any) =>
+    state.news.post?.comments.filter((c: any) =>
+      comment.children.some((e: any) => e === c._id),
+    ),
+  );
+
+  const [reply, setReply] = React.useState(false);
 
   function onReply(text: string) {
     dispatch(addCommentRequest({ post: postId, text, parent: comment._id }));
@@ -55,9 +63,7 @@ export default function Comment(props: Props) {
       <Body>{comment.text}</Body>
       <ReplyButton onClick={() => setReply(!reply)}>reply</ReplyButton>
       {reply ? <AddCommentForm onAddComment={onReply} /> : null}
-      {comment.children ? (
-        <Comments comments={comment.children} postId={postId} />
-      ) : null}
+      {replies ? <Comments comments={replies} postId={postId} /> : null}
     </Wrapper>
   );
 }

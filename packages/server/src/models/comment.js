@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { deepPopulate } from '../utils/deepPopulate';
 
 const CommentSchema = new mongoose.Schema(
   {
@@ -17,13 +16,5 @@ const CommentSchema = new mongoose.Schema(
 );
 
 // TODO: cascade deleting comments of comments
-
-CommentSchema.pre('findOne', deepPopulate('comments')).pre(
-  'find',
-  deepPopulate({
-    path: 'comments',
-    populate: { path: 'user', select: '_id, name, role' },
-  }),
-);
 
 export default mongoose.model('Comment', CommentSchema);
