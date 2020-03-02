@@ -8,7 +8,7 @@ const reducers = combineReducers({
   user: userReducer,
   news: postsReducer,
   isFetching: isFetchingReducer,
-  error: errorHandlerReducer,
+  errors: errorHandlerReducer,
 });
 
 export type RootState = ReturnType<typeof reducers>;

@@ -15,10 +15,10 @@ export function postsRequest(): ThunkAction<
     dispatch({ type: types.POSTS_REQUEST });
 
     getPosts().then(
-      (data: any) => {
+      (data: Post[]) => {
         dispatch(postsSuccess(data));
       },
-      (error: any) => {
+      (error: Error) => {
         dispatch(postsFailure(error));
       },
     );
@@ -44,10 +44,10 @@ export function postRequest(
     dispatch({ type: types.POST_REQUEST });
 
     getPost(id).then(
-      (data: any) => {
+      (data: Post) => {
         dispatch(postSuccess(data));
       },
-      (error: any) => {
+      (error: Error) => {
         dispatch(postFailure(error));
       },
     );
@@ -72,17 +72,17 @@ export function addPostRequest(
     dispatch({ type: types.ADD_POST_REQUEST });
 
     addPost(post, accessToken).then(
-      (data: any) => {
+      (data: Post) => {
         dispatch(addPostSuccess(data));
       },
-      (error: any) => {
+      (error: Error) => {
         dispatch(addPostFailure(error));
       },
     );
   };
 }
 
-export const addPostSuccess = (payload: any) => ({
+export const addPostSuccess = (payload: Post) => ({
   type: types.ADD_POST_SUCCESS,
   payload,
 });
@@ -101,10 +101,10 @@ export function addCommentRequest(
     dispatch({ type: types.ADD_COMMENT_REQUEST });
 
     addComment(comment, accessToken).then(
-      (data: any) => {
+      (data: Comment) => {
         dispatch(addCommentSuccess(data));
       },
-      (error: any) => {
+      (error: Error) => {
         dispatch(addCommentFailure(error));
       },
     );

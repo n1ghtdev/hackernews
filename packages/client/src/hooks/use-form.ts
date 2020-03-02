@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function useForm(onSubmit: () => void, initialValues: any) {
+export default function useForm<T>(onSubmit: () => void, initialValues: T) {
   const [values, setValues] = React.useState(initialValues);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {

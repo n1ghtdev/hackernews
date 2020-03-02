@@ -8,6 +8,7 @@ import { RootState } from '../modules/reducers';
 
 import SignInForm from '../components/signin-form';
 import SignUpForm from '../components/signup-form';
+import { User } from '../modules/user/types';
 
 export default function AuthPage() {
   const dispatch = useDispatch();
@@ -20,8 +21,12 @@ export default function AuthPage() {
 
   return (
     <>
-      <SignInForm onSubmit={(data: any) => dispatch(signInRequest(data))} />
-      <SignUpForm onSubmit={(data: any) => dispatch(signUpRequest(data))} />
+      <SignInForm
+        onSubmit={(data: Partial<User>) => dispatch(signInRequest(data))}
+      />
+      <SignUpForm
+        onSubmit={(data: Partial<User>) => dispatch(signUpRequest(data))}
+      />
     </>
   );
 }

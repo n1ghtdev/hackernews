@@ -1,13 +1,17 @@
 import React from 'react';
-import { Route, Redirect, RouteComponentProps } from 'react-router-dom';
+import {
+  Route,
+  Redirect,
+  RouteComponentProps,
+  RouteProps,
+} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../modules/reducers';
 import useLoading from '../hooks/use-loading';
 
 type Props = {
-  component: React.ElementType;
-  [key: string]: any;
-};
+  component: React.ComponentType<RouteComponentProps>;
+} & RouteProps;
 
 export default function PrivateRoute(props: Props) {
   const [isSignedIn, isVerified] = useSelector((state: RootState) => [
@@ -25,8 +29,8 @@ export default function PrivateRoute(props: Props) {
   return (
     <Route
       {...rest}
-      render={(props: RouteComponentProps) =>
-        isSignedIn ? <Component {...props} /> : <Redirect to="/auth" />
+      render={componentProps =>
+        isSignedIn ? <Component {...componentProps} /> : <Redirect to="/auth" />
       }
     />
   );

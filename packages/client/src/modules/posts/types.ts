@@ -1,5 +1,7 @@
 import { User } from '../user/types';
 
+// TODO: add separate type for single post
+
 export type Post = {
   _id: string;
   title: string;
@@ -16,7 +18,14 @@ export type PostList = {
 };
 
 export type Comment = {
-  [key: string]: any;
+  _id: string;
+  parent: string;
+  text: string;
+  user: User;
+  post: string;
+  children: string[];
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type State = {

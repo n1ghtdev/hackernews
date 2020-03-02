@@ -5,8 +5,13 @@ type Props = {
   onSubmit: (data: { [key: string]: string }) => void;
 };
 
+type FormValues = {
+  email: string;
+  password: string;
+};
+
 export default function SignInForm(props: Props) {
-  const { values, handleChange, handleSubmit } = useForm(
+  const { values, handleChange, handleSubmit } = useForm<FormValues>(
     () => props.onSubmit(values),
     {
       email: '',

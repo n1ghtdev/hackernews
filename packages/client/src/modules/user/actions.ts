@@ -3,25 +3,26 @@ import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../reducers';
 import * as types from './constants';
 import { signIn, signUp, logout, verifyAuth } from '../../api';
+import { User } from './types';
 
 export function signInRequest(
-  user: any,
+  user: Partial<User>,
 ): ThunkAction<void, RootState, unknown, Action<string>> {
   return async dispatch => {
     dispatch({ type: types.SIGN_IN_REQUEST });
 
     signIn(user).then(
-      (data: any) => {
+      (data: User) => {
         dispatch(signInSuccess(data));
       },
-      (error: any) => {
+      (error: Error) => {
         dispatch(signInFailure(error));
       },
     );
   };
 }
 
-export const signInSuccess = (payload: any) =>
+export const signInSuccess = (payload: User) =>
   ({
     type: types.SIGN_IN_SUCCESS,
     payload,
@@ -34,23 +35,23 @@ export const signInFailure = (error: Error) =>
   } as const);
 
 export function signUpRequest(
-  user: any,
+  user: Partial<User>,
 ): ThunkAction<void, RootState, unknown, Action<string>> {
   return async dispatch => {
     dispatch({ type: types.SIGN_UP_REQUEST });
 
     signUp(user).then(
-      (data: any) => {
+      (data: User) => {
         dispatch(signUpSuccess(data));
       },
-      (error: any) => {
+      (error: Error) => {
         dispatch(signUpFailure(error));
       },
     );
   };
 }
 
-export const signUpSuccess = (payload: any) =>
+export const signUpSuccess = (payload: User) =>
   ({
     type: types.SIGN_UP_SUCCESS,
     payload,
@@ -72,17 +73,17 @@ export function verifyRequest(): ThunkAction<
     dispatch({ type: types.VERIFY_REQUEST });
 
     verifyAuth().then(
-      (data: any) => {
+      (data: User) => {
         dispatch(verifySuccess(data));
       },
-      (error: any) => {
+      (error: Error) => {
         dispatch(verifyFailure(error));
       },
     );
   };
 }
 
-export function verifySuccess(data: any) {
+export function verifySuccess(data: User) {
   return {
     type: types.VERIFY_SUCCESS,
     payload: data,
@@ -107,7 +108,7 @@ export function logoutRequest(): ThunkAction<
       () => {
         dispatch(logoutSuccess());
       },
-      (error: any) => {
+      (error: Error) => {
         dispatch(logoutFailure(error));
       },
     );

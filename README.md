@@ -30,8 +30,12 @@
 - [ ] error handling
   - [x] handle redux store errors
   - [x] handle fetch api error
-  - [ ] handle react components error
+  - [ ] handle react components error (Error Boundaries)
+- [ ] error messages/popups
 - [ ] post and comment points
 - [ ] user page
 - [ ] 404 page
+- [ ] tests
+  - [ ] unit tests
+  - [ ] e2e tests
 - [ ] dark theme

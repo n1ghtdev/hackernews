@@ -6,8 +6,13 @@ type Props = {
   onSubmit: (data: Partial<Post>) => void;
 };
 
+type FormValues = {
+  title: string;
+  source: string;
+};
+
 export default function AddPostForm(props: Props) {
-  const { values, handleChange, handleSubmit } = useForm(
+  const { values, handleChange, handleSubmit } = useForm<FormValues>(
     () => props.onSubmit(values),
     {
       title: '',

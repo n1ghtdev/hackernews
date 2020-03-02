@@ -49,7 +49,7 @@ router.post('/signin', async (req, res, next) => {
 
 router.post('/logout', (req, res) => {
   res.clearCookie('refreshToken', { path: '/api/auth/refresh-token' });
-  return res.send({ message: 'Logged out' }).status(200);
+  return res.send(true).status(200);
 });
 
 router.post('/refresh-token', async (req, res, next) => {

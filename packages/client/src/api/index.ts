@@ -1,4 +1,5 @@
 import { Post, Comment } from '../modules/posts/types';
+import { User } from '../modules/user/types';
 
 const API_URL = '/api';
 const POST_API = `${API_URL}/news`;
@@ -22,7 +23,7 @@ async function get<T>(url: string, headers: any = defaultHeaders): Promise<T> {
 
 async function post<T>(
   url: string,
-  body?: any,
+  body?: Partial<T>,
   headers: any = defaultHeaders,
 ): Promise<T> {
   const response = await fetch(url, {
@@ -53,38 +54,33 @@ export async function getPost(id: string) {
 export async function addPost(data: Partial<Post>, token: string) {
   const headers = { ...defaultHeaders, authorization: `Bearer ${token}` };
 
-  const posted = await post<Partial<Post>>(`${POST_API}`, data, headers);
+  const posted = await post<Post>(`${POST_API}`, data, headers);
   return posted;
 }
 
 export async function addComment(data: Partial<Comment>, token: string) {
   const headers = { ...defaultHeaders, authorization: `Bearer ${token}` };
 
-  const posted = await post<Partial<Comment>>(`${COMMENT_API}`, data, headers);
+  const posted = await post<Comment>(`${COMMENT_API}`, data, headers);
   return posted;
 }
 
-export async function signUp(data: any) {
-  const signedUp = await post(`${AUTH_API}/signup`, data);
+export async function signUp(data: Partial<User>) {
+  const signedUp = await post<User>(`${AUTH_API}/signup`, data);
   return signedUp;
 }
 
-export async function signIn(data: any) {
-  const signedIn = await post(`${AUTH_API}/signin`, data);
+export async function signIn(data: Partial<User>) {
+  const signedIn = await post<User>(`${AUTH_API}/signin`, data);
   return signedIn;
 }
 
 export async function verifyAuth() {
-  const response = await post(`${AUTH_API}/refresh-token`);
+  const response = await post<User>(`${AUTH_API}/refresh-token`);
   return response;
 }
 
 export async function logout() {
-  const loggedOut = await post(`${AUTH_API}/logout`);
+  const loggedOut = await post<boolean>(`${AUTH_API}/logout`);
   return loggedOut;
-}
-
-export async function getComments(postId: string) {
-  const comments = await get(`${COMMENT_API}/${postId}`);
-  return comments;
 }

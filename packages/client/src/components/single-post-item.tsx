@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addCommentRequest } from '../modules/posts/actions';
-import { Post } from '../modules/posts/types';
+import { Post, Comment } from '../modules/posts/types';
 import PostItem from './post-item';
 import Comments from './comments';
 import AddCommentForm from './add-comment-form';
@@ -21,7 +21,10 @@ export default function SinglePostItem(props: Props) {
           dispatch(addCommentRequest({ post: props.post._id, text }));
         }}
       />
-      <Comments comments={props.post.comments} postId={props.post._id} />
+      <Comments
+        comments={props.post.comments as Comment[]}
+        postId={props.post._id}
+      />
     </>
   );
 }

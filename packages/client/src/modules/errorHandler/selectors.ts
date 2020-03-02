@@ -1,5 +1,11 @@
-export const createErrorSelector = (actions: any) => (state: any) => {
-  const errors = actions.map((action: any) => state.error[action]);
+import { RootState } from '../reducers';
+
+export const createErrorSelector = (actions: string[]) => (
+  state: RootState,
+) => {
+  console.log(actions, state);
+
+  const errors = actions.map((action: string) => state.errors[action]);
   if (errors && errors[0]) {
     return errors[0];
   }

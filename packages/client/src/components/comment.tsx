@@ -6,9 +6,10 @@ import { RootState } from '../modules/reducers';
 import { addCommentRequest } from '../modules/posts/actions';
 import Comments from './comments';
 import AddCommentForm from './add-comment-form';
+import { Comment as CommentType } from '../modules/posts/types';
 
 type Props = {
-  comment: any;
+  comment: CommentType;
   postId: string;
 };
 
@@ -42,9 +43,9 @@ export default function Comment(props: Props) {
   const dispatch = useDispatch();
   const { comment, postId } = props;
 
-  const replies = useSelector((state: any) =>
-    state.news.post?.comments.filter((c: any) =>
-      comment.children.some((e: any) => e === c._id),
+  const replies = useSelector((state: RootState) =>
+    (state.news.post?.comments as CommentType[]).filter((el: CommentType) =>
+      comment.children.some((id: string) => id === el._id),
     ),
   );
 
