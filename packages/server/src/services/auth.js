@@ -9,21 +9,23 @@ export class AuthService {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(authInput.password, salt);
 
-      const user = await UserModel.create({
+      const userRecord = await UserModel.create({
         ...authInput,
         salt: salt.toString('hex'),
         password: hashedPassword,
       });
 
-      if (!user) {
+      if (!userRecord) {
         throw new Error('User cannot be created');
       }
 
-      const accessToken = this.generateAccessToken(user);
-      const refreshToken = this.generateRefreshToken(user);
-      await UserModel.updateOne({ _id: user._id }, { refreshToken });
+      const accessToken = this.generateAccessToken(userRecord);
+      const refreshToken = this.generateRefreshToken(userRecord);
+      await UserModel.updateOne({ _id: userRecord._id }, { refreshToken });
 
+      const user = userRecord.toObject();
       delete user.password;
+      delete user.refreshToken;
 
       return { user, accessToken, refreshToken };
     } catch (error) {
@@ -32,20 +34,22 @@ export class AuthService {
   }
 
   static async SignIn(email, password) {
-    const user = await UserModel.findOne({ email });
+    const userRecord = await UserModel.findOne({ email });
 
-    if (!user) {
+    if (!userRecord) {
       throw new Error("User doesn't exists");
     }
 
-    const validPassword = await bcrypt.compare(password, user.password);
+    const validPassword = await bcrypt.compare(password, userRecord.password);
 
     if (validPassword) {
-      const accessToken = this.generateAccessToken(user);
-      const refreshToken = this.generateRefreshToken(user);
-      await UserModel.updateOne({ _id: user._id }, { refreshToken });
+      const accessToken = this.generateAccessToken(userRecord);
+      const refreshToken = this.generateRefreshToken(userRecord);
+      await UserModel.updateOne({ _id: userRecord._id }, { refreshToken });
 
+      const user = userRecord.toObject();
       delete user.password;
+      delete user.refreshToken;
 
       return { user, accessToken, refreshToken };
       // eslint-disable-next-line no-else-return
@@ -61,17 +65,21 @@ export class AuthService {
       throw new Error('Invalid Token');
     }
 
-    const user = await UserModel.findOne({ _id: payload._id });
-    if (!user) {
+    const userRecord = await UserModel.findOne({ _id: payload._id });
+    if (!userRecord) {
       throw new Error('User not found');
-    } else if (user.refreshToken !== token) {
+    } else if (userRecord.refreshToken !== token) {
       throw new Error('Session expired');
     }
 
-    const accessToken = this.generateAccessToken(user);
-    const refreshToken = this.generateRefreshToken(user);
+    const accessToken = this.generateAccessToken(userRecord);
+    const refreshToken = this.generateRefreshToken(userRecord);
 
-    await UserModel.updateOne({ _id: user._id }, { refreshToken });
+    await UserModel.updateOne({ _id: userRecord._id }, { refreshToken });
+
+    const user = userRecord.toObject();
+    delete user.password;
+    delete user.refreshToken;
 
     return { user, accessToken, refreshToken };
   }
@@ -80,7 +88,6 @@ export class AuthService {
     return jwt.sign(
       {
         _id: user._id,
-        name: user.name,
       },
       config.jwtSecret,
       {
@@ -93,7 +100,6 @@ export class AuthService {
     return jwt.sign(
       {
         _id: user._id,
-        name: user.name,
       },
       config.jwtRefreshSecret,
       {
