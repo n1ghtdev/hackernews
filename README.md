@@ -28,8 +28,8 @@
 - [x] add new post page
   - [x] private route
 - [ ] error handling
-  - [ ] handle redux store errors
-  - [ ] handle fetch api error
+  - [x] handle redux store errors
+  - [x] handle fetch api error
   - [ ] handle react components error
 - [ ] post and comment points
 - [ ] user page

@@ -9,4 +9,5 @@ export type State = {
   user: User;
   accessToken: string;
   isAuth?: boolean;
+  verified: boolean;
 };

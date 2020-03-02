@@ -69,6 +69,8 @@ export function verifyRequest(): ThunkAction<
   Action<string>
 > {
   return async dispatch => {
+    dispatch({ type: types.VERIFY_REQUEST });
+
     verifyAuth().then(
       (data: any) => {
         dispatch(verifySuccess(data));
@@ -124,10 +126,3 @@ export function logoutFailure(error: Error) {
     error,
   } as const;
 }
-
-export type ActionType = ReturnType<
-  | typeof signInSuccess
-  | typeof signUpSuccess
-  | typeof verifySuccess
-  | typeof logoutSuccess
->;

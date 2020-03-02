@@ -9,7 +9,6 @@ export default function useErrors(action: Action): boolean {
     Array.isArray(action) ? action : [action],
   );
   const errors = useSelector((state: RootState) => errorHandler(state));
-  console.log(errors);
 
   return errors;
 }

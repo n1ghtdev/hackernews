@@ -53,6 +53,8 @@ const posts = (state: any, action: AnyAction) => {
 
 const post = (state: any, action: AnyAction) => {
   switch (action.type) {
+    case types.ADD_POST_REQUEST:
+      return {};
     case types.POST_SUCCESS:
     case types.ADD_POST_SUCCESS:
     case types.UPDATE_POST_SUCCESS:
@@ -100,6 +102,7 @@ const reducer = (state: State = initialState, action: AnyAction) =>
       case types.POSTS_SUCCESS:
         draft.posts = posts(state.posts, action);
         break;
+      case types.ADD_POST_REQUEST:
       case types.POST_SUCCESS:
       case types.UPDATE_COMMENT_SUCCESS:
         draft.post = post(state.post, action);

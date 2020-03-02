@@ -15,18 +15,22 @@ export default function AddPostPage() {
   const isLoading = useLoading('add-post');
   const errors = useErrors('add-post');
   const history = useHistory();
+  const [isSubmitted, setIsSubmitted] = React.useState(false);
 
   React.useEffect(() => {
-    if (newPost?._id && !isLoading) {
-      history.push(`/post/${newPost._id}`);
+    if (isSubmitted) {
+      if (newPost?._id && !isLoading) {
+        history.push(`/post/${newPost._id}`);
+      }
     }
-  }, [newPost, history, isLoading]);
+  }, [newPost, history, isLoading, isSubmitted]);
 
   async function onAddPost(post: Partial<Post>) {
     await dispatch(addPostRequest(post));
+    setIsSubmitted(true);
   }
 
-  if (isLoading) {
+  if (isLoading || errors) {
     return null;
   }
 
