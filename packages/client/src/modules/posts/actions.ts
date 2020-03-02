@@ -13,12 +13,15 @@ export function postsRequest(): ThunkAction<
 > {
   return async dispatch => {
     dispatch({ type: types.POSTS_REQUEST });
-    try {
-      const data = await getPosts();
-      dispatch(postsSuccess(data));
-    } catch (err) {
-      dispatch(postsFailure(err.message));
-    }
+
+    getPosts().then(
+      (data: any) => {
+        dispatch(postsSuccess(data));
+      },
+      (error: any) => {
+        dispatch(postsFailure(error));
+      },
+    );
   };
 }
 
@@ -28,7 +31,7 @@ export const postsSuccess = (payload: Post[]) =>
     payload,
   } as const);
 
-export const postsFailure = (error: string) =>
+export const postsFailure = (error: Error) =>
   ({
     type: types.POSTS_FAILURE,
     error,
@@ -39,12 +42,15 @@ export function postRequest(
 ): ThunkAction<void, RootState, unknown, Action<string>> {
   return async dispatch => {
     dispatch({ type: types.POST_REQUEST });
-    try {
-      const data = await getPost(id);
-      dispatch(postSuccess(data));
-    } catch (err) {
-      dispatch(postFailure(err.message));
-    }
+
+    getPost(id).then(
+      (data: any) => {
+        dispatch(postSuccess(data));
+      },
+      (error: any) => {
+        dispatch(postFailure(error));
+      },
+    );
   };
 }
 export const postSuccess = (payload: Post) => ({
@@ -52,24 +58,27 @@ export const postSuccess = (payload: Post) => ({
   payload,
 });
 
-export const postFailure = (error: string) => ({
+export const postFailure = (error: Error) => ({
   type: types.POST_FAILURE,
   error,
 });
 
 export function addPostRequest(
-  payload: Partial<Post>,
+  post: Partial<Post>,
 ): ThunkAction<void, RootState, unknown, Action<string>> {
   return async (dispatch, getState) => {
     const accessToken = getState().user.accessToken;
 
     dispatch({ type: types.ADD_POST_REQUEST });
-    try {
-      const data = await addPost(payload, accessToken);
-      dispatch(addPostSuccess(data));
-    } catch (err) {
-      dispatch(addPostFailure(err.message));
-    }
+
+    addPost(post, accessToken).then(
+      (data: any) => {
+        dispatch(addPostSuccess(data));
+      },
+      (error: any) => {
+        dispatch(addPostFailure(error));
+      },
+    );
   };
 }
 
@@ -78,7 +87,7 @@ export const addPostSuccess = (payload: any) => ({
   payload,
 });
 
-export const addPostFailure = (error: string) => ({
+export const addPostFailure = (error: Error) => ({
   type: types.ADD_POST_FAILURE,
   error,
 });
@@ -90,12 +99,15 @@ export function addCommentRequest(
     const accessToken = getState().user.accessToken;
 
     dispatch({ type: types.ADD_COMMENT_REQUEST });
-    try {
-      const data = await addComment(comment, accessToken);
-      dispatch(addCommentSuccess(data));
-    } catch (err) {
-      dispatch(addCommentFailure(err.message));
-    }
+
+    addComment(comment, accessToken).then(
+      (data: any) => {
+        dispatch(addCommentSuccess(data));
+      },
+      (error: any) => {
+        dispatch(addCommentFailure(error));
+      },
+    );
   };
 }
 
@@ -104,7 +116,7 @@ export const addCommentSuccess = (payload: Comment) => ({
   payload,
 });
 
-export const addCommentFailure = (error: string) => ({
+export const addCommentFailure = (error: Error) => ({
   type: types.ADD_COMMENT_FAILURE,
   error,
 });

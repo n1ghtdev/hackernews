@@ -9,12 +9,15 @@ export function signInRequest(
 ): ThunkAction<void, RootState, unknown, Action<string>> {
   return async dispatch => {
     dispatch({ type: types.SIGN_IN_REQUEST });
-    try {
-      const data = await signIn(user);
-      dispatch(signInSuccess(data));
-    } catch (err) {
-      dispatch(signInFailure(err.message));
-    }
+
+    signIn(user).then(
+      (data: any) => {
+        dispatch(signInSuccess(data));
+      },
+      (error: any) => {
+        dispatch(signInFailure(error));
+      },
+    );
   };
 }
 
@@ -24,7 +27,7 @@ export const signInSuccess = (payload: any) =>
     payload,
   } as const);
 
-export const signInFailure = (error: string) =>
+export const signInFailure = (error: Error) =>
   ({
     type: types.SIGN_IN_FAILURE,
     error,
@@ -35,12 +38,15 @@ export function signUpRequest(
 ): ThunkAction<void, RootState, unknown, Action<string>> {
   return async dispatch => {
     dispatch({ type: types.SIGN_UP_REQUEST });
-    try {
-      const data = await signUp(user);
-      dispatch(signUpSuccess(data));
-    } catch (err) {
-      dispatch(signUpFailure(err.message));
-    }
+
+    signUp(user).then(
+      (data: any) => {
+        dispatch(signUpSuccess(data));
+      },
+      (error: any) => {
+        dispatch(signUpFailure(error));
+      },
+    );
   };
 }
 
@@ -50,7 +56,7 @@ export const signUpSuccess = (payload: any) =>
     payload,
   } as const);
 
-export const signUpFailure = (error: string) =>
+export const signUpFailure = (error: Error) =>
   ({
     type: types.SIGN_UP_FAILURE,
     error,
@@ -63,12 +69,14 @@ export function verifyRequest(): ThunkAction<
   Action<string>
 > {
   return async dispatch => {
-    try {
-      const data = await verifyAuth();
-      dispatch(verifySuccess(data));
-    } catch (err) {
-      dispatch(verifyFailure(err));
-    }
+    verifyAuth().then(
+      (data: any) => {
+        dispatch(verifySuccess(data));
+      },
+      (error: any) => {
+        dispatch(verifyFailure(error));
+      },
+    );
   };
 }
 
@@ -79,7 +87,7 @@ export function verifySuccess(data: any) {
   } as const;
 }
 
-export function verifyFailure(error: any) {
+export function verifyFailure(error: Error) {
   return {
     type: types.VERIFY_FAILURE,
     error,
@@ -93,20 +101,33 @@ export function logoutRequest(): ThunkAction<
   Action<string>
 > {
   return async dispatch => {
-    const loggedOut = await logout();
-    dispatch(logoutSuccess());
+    logout().then(
+      () => {
+        dispatch(logoutSuccess());
+      },
+      (error: any) => {
+        dispatch(logoutFailure(error));
+      },
+    );
   };
 }
 
 export function logoutSuccess() {
   return {
-    type: types.LOGOUT,
+    type: types.LOGOUT_SUCCESS,
+  } as const;
+}
+
+export function logoutFailure(error: Error) {
+  return {
+    type: types.LOGOUT_FAILURE,
+    error,
   } as const;
 }
 
 export type ActionType = ReturnType<
   | typeof signInSuccess
   | typeof signUpSuccess
-  | typeof logoutSuccess
   | typeof verifySuccess
+  | typeof logoutSuccess
 >;

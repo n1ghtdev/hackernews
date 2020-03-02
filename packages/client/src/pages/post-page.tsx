@@ -20,7 +20,7 @@ export default function PostPage() {
     }
   }, [dispatch, id]);
 
-  if (isLoading) {
+  if (isLoading || post?._id !== id) {
     return null;
   }
 

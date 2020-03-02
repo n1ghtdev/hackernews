@@ -10,4 +10,5 @@ export const VERIFY_REQUEST = 'verify/request';
 export const VERIFY_SUCCESS = 'verify/success';
 export const VERIFY_FAILURE = 'verify/failure';
 
-export const LOGOUT = 'auth-logout';
+export const LOGOUT_SUCCESS = 'auth-logout/success';
+export const LOGOUT_FAILURE = 'auth-logout/failure';

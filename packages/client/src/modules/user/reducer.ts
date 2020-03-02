@@ -20,7 +20,7 @@ const reducer: Reducer<State> = (state = initialState, action: ActionType) =>
         draft.accessToken = action.payload.accessToken;
         draft.isAuth = true;
         break;
-      case types.LOGOUT:
+      case types.LOGOUT_SUCCESS:
         draft.user = {} as User;
         draft.accessToken = '';
         draft.isAuth = false;
