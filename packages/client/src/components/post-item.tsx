@@ -33,6 +33,13 @@ const Info = styled.div`
   color: ${({ theme }) => theme.textAccent};
 `;
 
+const Author = styled(Link)`
+  color: inherit;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 export default function PostItem(props: Props) {
   const { post, index } = props;
   return (
@@ -46,8 +53,9 @@ export default function PostItem(props: Props) {
       </Title>
       <Info>
         <span>
-          {post.points} points by {post.author?.name || 'anonymous'} at{' '}
-          <TimeAgo date={post.createdAt} live={false} /> {'|'}{' '}
+          {post.points} points by{' '}
+          <Author to={`/user/${post.author?._id}`}>{post.author?.name}</Author>{' '}
+          at <TimeAgo date={post.createdAt} live={false} /> {'|'}{' '}
           {post.comments?.length} comments
         </span>
       </Info>

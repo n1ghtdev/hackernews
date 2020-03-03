@@ -1,5 +1,6 @@
 import { Post, Comment } from '../modules/posts/types';
-import { User } from '../modules/auth/types';
+import { AuthUser } from '../modules/auth/types';
+import { User } from '../modules/users/types';
 
 const API_URL = '/api';
 const POST_API = `${API_URL}/news`;
@@ -41,6 +42,8 @@ async function post<T>(
   throw new Error(json.message);
 }
 
+/**** POSTS */
+
 export async function getPosts() {
   const posts = await get<Post[]>(POST_API);
   return posts;
@@ -65,22 +68,31 @@ export async function addComment(data: Partial<Comment>, token: string) {
   return posted;
 }
 
-export async function signUp(data: Partial<User>) {
-  const signedUp = await post<User>(`${AUTH_API}/signup`, data);
+/**** AUTH */
+
+export async function signUp(data: Partial<AuthUser>) {
+  const signedUp = await post<AuthUser>(`${AUTH_API}/signup`, data);
   return signedUp;
 }
 
-export async function signIn(data: Partial<User>) {
-  const signedIn = await post<User>(`${AUTH_API}/signin`, data);
+export async function signIn(data: Partial<AuthUser>) {
+  const signedIn = await post<AuthUser>(`${AUTH_API}/signin`, data);
   return signedIn;
 }
 
 export async function verifyAuth() {
-  const response = await post<User>(`${AUTH_API}/refresh-token`);
+  const response = await post<AuthUser>(`${AUTH_API}/refresh-token`);
   return response;
 }
 
 export async function logout() {
   const loggedOut = await post<boolean>(`${AUTH_API}/logout`);
   return loggedOut;
+}
+
+/**** USER */
+
+export async function getUser(id: string) {
+  const response = await get<User>(`${USER_API}/${id}`);
+  return response;
 }

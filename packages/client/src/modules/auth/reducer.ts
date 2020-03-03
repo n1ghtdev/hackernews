@@ -1,10 +1,10 @@
 import produce from 'immer';
 import { AnyAction } from 'redux';
 import * as types from './constants';
-import { State, User } from './types';
+import { State, AuthUser } from './types';
 
 const initialState: State = {
-  user: {} as User,
+  user: {} as AuthUser,
   accessToken: '',
   isAuth: false,
   verified: false,
@@ -20,7 +20,7 @@ const reducer = (state: State = initialState, action: AnyAction) =>
         draft.isAuth = true;
         break;
       case types.LOGOUT_SUCCESS:
-        draft.user = {} as User;
+        draft.user = {} as AuthUser;
         draft.accessToken = '';
         draft.isAuth = false;
         break;

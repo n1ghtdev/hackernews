@@ -15,6 +15,7 @@ import PostsPage from './pages/posts-page';
 import PostPage from './pages/post-page';
 import AddPostPage from './pages/add-post-page';
 import AuthPage from './pages/auth-page';
+import UserPage from './pages/user-page';
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ function App() {
           <PrivateRoute exact path="/add-post" component={AddPostPage} />
           <Route exact path="/post/:id" component={PostPage} />
           <Route exact path="/auth" component={AuthPage} />
+          <Route exact path="/user/:id" component={UserPage} />
         </Layout>
       </Switch>
     </ThemeProvider>

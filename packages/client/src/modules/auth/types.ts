@@ -1,4 +1,4 @@
-export type User = {
+export type AuthUser = {
   role: string;
   name: string;
   email: string;
@@ -7,7 +7,7 @@ export type User = {
 };
 
 export type State = {
-  user: User;
+  user: AuthUser;
   accessToken: string;
   isAuth?: boolean;
   verified: boolean;

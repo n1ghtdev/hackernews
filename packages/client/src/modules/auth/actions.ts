@@ -3,16 +3,16 @@ import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../reducers';
 import * as types from './constants';
 import { signIn, signUp, logout, verifyAuth } from '../../api';
-import { User } from './types';
+import { AuthUser } from './types';
 
 export function signInRequest(
-  user: Partial<User>,
+  user: Partial<AuthUser>,
 ): ThunkAction<void, RootState, unknown, Action<string>> {
   return async dispatch => {
     dispatch({ type: types.SIGN_IN_REQUEST });
 
     signIn(user).then(
-      (data: User) => {
+      (data: AuthUser) => {
         dispatch(signInSuccess(data));
       },
       (error: Error) => {
@@ -22,26 +22,24 @@ export function signInRequest(
   };
 }
 
-export const signInSuccess = (payload: User) =>
-  ({
-    type: types.SIGN_IN_SUCCESS,
-    payload,
-  } as const);
+export const signInSuccess = (payload: AuthUser) => ({
+  type: types.SIGN_IN_SUCCESS,
+  payload,
+});
 
-export const signInFailure = (error: Error) =>
-  ({
-    type: types.SIGN_IN_FAILURE,
-    error,
-  } as const);
+export const signInFailure = (error: Error) => ({
+  type: types.SIGN_IN_FAILURE,
+  error,
+});
 
 export function signUpRequest(
-  user: Partial<User>,
+  user: Partial<AuthUser>,
 ): ThunkAction<void, RootState, unknown, Action<string>> {
   return async dispatch => {
     dispatch({ type: types.SIGN_UP_REQUEST });
 
     signUp(user).then(
-      (data: User) => {
+      (data: AuthUser) => {
         dispatch(signUpSuccess(data));
       },
       (error: Error) => {
@@ -51,17 +49,15 @@ export function signUpRequest(
   };
 }
 
-export const signUpSuccess = (payload: User) =>
-  ({
-    type: types.SIGN_UP_SUCCESS,
-    payload,
-  } as const);
+export const signUpSuccess = (payload: AuthUser) => ({
+  type: types.SIGN_UP_SUCCESS,
+  payload,
+});
 
-export const signUpFailure = (error: Error) =>
-  ({
-    type: types.SIGN_UP_FAILURE,
-    error,
-  } as const);
+export const signUpFailure = (error: Error) => ({
+  type: types.SIGN_UP_FAILURE,
+  error,
+});
 
 export function verifyRequest(): ThunkAction<
   void,
@@ -73,7 +69,7 @@ export function verifyRequest(): ThunkAction<
     dispatch({ type: types.VERIFY_REQUEST });
 
     verifyAuth().then(
-      (data: User) => {
+      (data: AuthUser) => {
         dispatch(verifySuccess(data));
       },
       (error: Error) => {
@@ -83,19 +79,15 @@ export function verifyRequest(): ThunkAction<
   };
 }
 
-export function verifySuccess(data: User) {
-  return {
-    type: types.VERIFY_SUCCESS,
-    payload: data,
-  } as const;
-}
+export const verifySuccess = (data: AuthUser) => ({
+  type: types.VERIFY_SUCCESS,
+  payload: data,
+});
 
-export function verifyFailure(error: Error) {
-  return {
-    type: types.VERIFY_FAILURE,
-    error,
-  } as const;
-}
+export const verifyFailure = (error: Error) => ({
+  type: types.VERIFY_FAILURE,
+  error,
+});
 
 export function logoutRequest(): ThunkAction<
   void,
@@ -115,15 +107,11 @@ export function logoutRequest(): ThunkAction<
   };
 }
 
-export function logoutSuccess() {
-  return {
-    type: types.LOGOUT_SUCCESS,
-  } as const;
-}
+export const logoutSuccess = () => ({
+  type: types.LOGOUT_SUCCESS,
+});
 
-export function logoutFailure(error: Error) {
-  return {
-    type: types.LOGOUT_FAILURE,
-    error,
-  } as const;
-}
+export const logoutFailure = (error: Error) => ({
+  type: types.LOGOUT_FAILURE,
+  error,
+});

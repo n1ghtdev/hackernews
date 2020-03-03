@@ -8,11 +8,11 @@ import { RootState } from '../modules/reducers';
 
 import SignInForm from '../components/signin-form';
 import SignUpForm from '../components/signup-form';
-import { User } from '../modules/auth/types';
+import { AuthUser } from '../modules/auth/types';
 
 export default function AuthPage() {
   const dispatch = useDispatch();
-  const currentUser = useSelector((state: RootState) => state.user);
+  const currentUser = useSelector((state: RootState) => state.auth);
   const history = useHistory();
 
   if (currentUser.isAuth) {
@@ -22,10 +22,10 @@ export default function AuthPage() {
   return (
     <>
       <SignInForm
-        onSubmit={(data: Partial<User>) => dispatch(signInRequest(data))}
+        onSubmit={(data: Partial<AuthUser>) => dispatch(signInRequest(data))}
       />
       <SignUpForm
-        onSubmit={(data: Partial<User>) => dispatch(signUpRequest(data))}
+        onSubmit={(data: Partial<AuthUser>) => dispatch(signUpRequest(data))}
       />
     </>
   );
