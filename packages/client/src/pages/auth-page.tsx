@@ -2,13 +2,13 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { signInRequest } from '../modules/user/actions';
-import { signUpRequest } from '../modules/user/actions';
+import { signInRequest } from '../modules/auth/actions';
+import { signUpRequest } from '../modules/auth/actions';
 import { RootState } from '../modules/reducers';
 
 import SignInForm from '../components/signin-form';
 import SignUpForm from '../components/signup-form';
-import { User } from '../modules/user/types';
+import { User } from '../modules/auth/types';
 
 export default function AuthPage() {
   const dispatch = useDispatch();

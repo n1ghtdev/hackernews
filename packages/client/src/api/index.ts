@@ -1,5 +1,5 @@
 import { Post, Comment } from '../modules/posts/types';
-import { User } from '../modules/user/types';
+import { User } from '../modules/auth/types';
 
 const API_URL = '/api';
 const POST_API = `${API_URL}/news`;

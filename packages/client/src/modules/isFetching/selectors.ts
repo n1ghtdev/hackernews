@@ -1,7 +1,3 @@
-import { RootState } from '../reducers';
-
-export const createLoadingSelector = (actions: string[]) => (
-  state: RootState,
-) => {
+export const createLoadingSelector = (actions: string[]) => (state: any) => {
   return actions.some((action: string) => state.isFetching[action]);
 };

@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { useDispatch } from 'react-redux';
 
-import { verifyRequest } from './modules/user/actions';
+import { verifyRequest } from './modules/auth/actions';
 
 import { GlobalStyles } from './styles/global-styles';
 import { theme } from './styles/theme';

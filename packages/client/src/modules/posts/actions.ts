@@ -67,7 +67,7 @@ export function addPostRequest(
   post: Partial<Post>,
 ): ThunkAction<void, RootState, unknown, Action<string>> {
   return async (dispatch, getState) => {
-    const accessToken = getState().user.accessToken;
+    const accessToken = getState().auth.accessToken;
 
     dispatch({ type: types.ADD_POST_REQUEST });
 
@@ -96,7 +96,7 @@ export function addCommentRequest(
   comment: Partial<Comment>,
 ): ThunkAction<void, RootState, unknown, Action<string>> {
   return async (dispatch, getState) => {
-    const accessToken = getState().user.accessToken;
+    const accessToken = getState().auth.accessToken;
 
     dispatch({ type: types.ADD_COMMENT_REQUEST });
 

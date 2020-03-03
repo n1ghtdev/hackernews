@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
-import userReducer from './user/reducer';
+import authReducer from './auth/reducer';
 import postsReducer from './posts/reducer';
 import isFetchingReducer from './isFetching/reducer';
 import errorHandlerReducer from './errorHandler/reducer';
 
 const reducers = combineReducers({
-  user: userReducer,
+  auth: authReducer,
   news: postsReducer,
   isFetching: isFetchingReducer,
   errors: errorHandlerReducer,

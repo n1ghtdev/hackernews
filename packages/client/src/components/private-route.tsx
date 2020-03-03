@@ -15,8 +15,8 @@ type Props = {
 
 export default function PrivateRoute(props: Props) {
   const [isSignedIn, isVerified] = useSelector((state: RootState) => [
-    state.user.isAuth,
-    state.user.verified,
+    state.auth.isAuth,
+    state.auth.verified,
   ]);
   const isLoading = useLoading('verify');
 

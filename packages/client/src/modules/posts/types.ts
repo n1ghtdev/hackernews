@@ -1,4 +1,4 @@
-import { User } from '../user/types';
+import { User } from '../auth/types';
 
 // TODO: add separate type for single post
 

@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../modules/reducers';
-import { logoutRequest } from '../modules/user/actions';
+import { logoutRequest } from '../modules/auth/actions';
 
 const Wrapper = styled.header`
   background: ${({ theme }) => theme.primary};
@@ -46,7 +46,7 @@ const Logout = styled.button`
 
 export default function Header() {
   const dispatch = useDispatch();
-  const isSignedIn = useSelector((state: RootState) => state.user.isAuth);
+  const isSignedIn = useSelector((state: RootState) => state.auth.isAuth);
 
   function onLogout() {
     dispatch(logoutRequest());
