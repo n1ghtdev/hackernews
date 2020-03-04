@@ -11,7 +11,7 @@ export default function PostPage() {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const post = useSelector((state: RootState) => state.news.post);
+  const post = useSelector((state: RootState) => id && state.posts[id]);
   const isLoading = useLoading('posts');
 
   React.useEffect(() => {
@@ -20,7 +20,7 @@ export default function PostPage() {
     }
   }, [dispatch, id]);
 
-  if (isLoading || post?._id !== id) {
+  if (isLoading) {
     return null;
   }
 

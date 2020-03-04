@@ -12,9 +12,7 @@ import { Post } from '../modules/posts/types';
 
 export default function PostsPage() {
   const dispatch = useDispatch();
-  const posts = useSelector((state: RootState) =>
-    selectPosts(state.news.posts),
-  );
+  const posts = useSelector((state: RootState) => selectPosts(state.posts));
 
   const isLoading = useLoading('posts');
 

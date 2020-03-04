@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import TimeAgo from 'react-timeago';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../modules/reducers';
-import { addCommentRequest } from '../modules/posts/actions';
+import { addCommentRequest } from '../modules/comments/actions';
 import Comments from './comments';
 import AddCommentForm from './add-comment-form';
-import { Comment as CommentType } from '../modules/posts/types';
+import { Comment as CommentType } from '../modules/comments/types';
+import { selectCommentReplies } from '../modules/comments/selectors';
 
 type Props = {
   comment: CommentType;
@@ -44,9 +45,7 @@ export default function Comment(props: Props) {
   const { comment, postId } = props;
 
   const replies = useSelector((state: RootState) =>
-    (state.news.post?.comments as CommentType[]).filter((el: CommentType) =>
-      comment.children.some((id: string) => id === el._id),
-    ),
+    selectCommentReplies(state.comments, comment.children),
   );
 
   const [reply, setReply] = React.useState(false);
