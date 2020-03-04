@@ -21,17 +21,3 @@ export const UPDATE_POST_FAILURE = 'update-post/failure';
 export const DELETE_POST_REQUEST = 'delete-post/request';
 export const DELETE_POST_SUCCESS = 'delete-post/success';
 export const DELETE_POST_FAILURE = 'delete-post/failure';
-
-/* COMMENTS */
-
-export const ADD_COMMENT_REQUEST = 'add-comment/request';
-export const ADD_COMMENT_SUCCESS = 'add-comment/success';
-export const ADD_COMMENT_FAILURE = 'add-comment/failure';
-
-export const UPDATE_COMMENT_REQUEST = 'update-comment/request';
-export const UPDATE_COMMENT_SUCCESS = 'update-comment/success';
-export const UPDATE_COMMENT_FAILURE = 'update-comment/failure';
-
-export const DELETE_COMMENT_REQUEST = 'delete-comment/request';
-export const DELETE_COMMENT_SUCCESS = 'delete-comment/success';
-export const DELETE_COMMENT_FAILURE = 'delete-comment/failure';

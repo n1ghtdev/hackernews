@@ -4,7 +4,7 @@ import NewsModel from '../models/news';
 export class CommentService {
   static async getByPostId(id) {
     const records = await CommentModel.find({ post: id })
-      .populate('user')
+      .populate({ path: 'user', select: '_id, name' })
       .exec();
 
     if (!records) {
@@ -33,6 +33,10 @@ export class CommentService {
         { $push: { comments: doc._id } },
       );
     });
+
+    await commentRecord
+      .populate({ path: 'user', select: '_id, name' })
+      .execPopulate();
 
     return commentRecord;
   }

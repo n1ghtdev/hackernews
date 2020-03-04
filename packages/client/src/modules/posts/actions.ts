@@ -1,8 +1,8 @@
-import { Post, Comment } from './types';
-import * as types from './constants';
-import { getPosts, getPost, addPost, addComment } from '../../api';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
+import { Post } from './types';
+import * as types from './constants';
+import { getPosts, getPost, addPost } from '../../api';
 import { RootState } from '../reducers';
 
 export function postsRequest(): ThunkAction<
@@ -89,34 +89,5 @@ export const addPostSuccess = (payload: Post) => ({
 
 export const addPostFailure = (error: Error) => ({
   type: types.ADD_POST_FAILURE,
-  error,
-});
-
-export function addCommentRequest(
-  comment: Partial<Comment>,
-): ThunkAction<void, RootState, unknown, Action<string>> {
-  return async (dispatch, getState) => {
-    const accessToken = getState().auth.accessToken;
-
-    dispatch({ type: types.ADD_COMMENT_REQUEST });
-
-    addComment(comment, accessToken).then(
-      (data: Comment) => {
-        dispatch(addCommentSuccess(data));
-      },
-      (error: Error) => {
-        dispatch(addCommentFailure(error));
-      },
-    );
-  };
-}
-
-export const addCommentSuccess = (payload: Comment) => ({
-  type: types.ADD_COMMENT_SUCCESS,
-  payload,
-});
-
-export const addCommentFailure = (error: Error) => ({
-  type: types.ADD_COMMENT_FAILURE,
   error,
 });

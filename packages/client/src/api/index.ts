@@ -1,6 +1,7 @@
-import { Post, Comment } from '../modules/posts/types';
+import { Post } from '../modules/posts/types';
 import { AuthUser } from '../modules/auth/types';
 import { User } from '../modules/users/types';
+import { Comment } from '../modules/comments/types';
 
 const API_URL = '/api';
 const POST_API = `${API_URL}/news`;
@@ -59,6 +60,13 @@ export async function addPost(data: Partial<Post>, token: string) {
 
   const posted = await post<Post>(`${POST_API}`, data, headers);
   return posted;
+}
+
+/**** COMMENTS */
+
+export async function getComments(postId: string) {
+  const response = await get<Comment[]>(`${COMMENT_API}/${postId}`);
+  return response;
 }
 
 export async function addComment(data: Partial<Comment>, token: string) {

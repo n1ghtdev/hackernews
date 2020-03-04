@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Comment from './comment';
-import { Comment as CommentType } from '../modules/posts/types';
+import { Comment as CommentType } from '../modules/comments/types';
 
 type Props = {
   comments: CommentType[];
@@ -18,17 +18,12 @@ const Wrapper = styled.ul`
 
 export default function Comments(props: Props) {
   const { comments, postId } = props;
-  const filteredComments = comments.filter(
-    (comment: CommentType) => comment.parent === null,
-  );
 
   return (
     <Wrapper>
-      {(filteredComments.length ? filteredComments : comments).map(
-        (comment: CommentType) => (
-          <Comment comment={comment} postId={postId} />
-        ),
-      )}
+      {comments.map((comment: CommentType) => (
+        <Comment key={comment._id} comment={comment} postId={postId} />
+      ))}
     </Wrapper>
   );
 }

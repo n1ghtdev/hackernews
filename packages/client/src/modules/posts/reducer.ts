@@ -1,12 +1,9 @@
 import { AnyAction } from 'redux';
 import produce from 'immer';
 import * as types from './constants';
-import { State, Post, Comment } from './types';
+import { PostList, Post } from './types';
 
-const initialState: State = {
-  posts: {},
-  post: null,
-};
+const initialState: PostList = {};
 
 const posts = (state: any, action: AnyAction) => {
   switch (action.type) {
@@ -17,104 +14,29 @@ const posts = (state: any, action: AnyAction) => {
       });
 
       return newState;
+    case types.POST_SUCCESS: {
+      return { ...state, [action.payload._id]: action.payload };
+    }
     case types.ADD_POST_SUCCESS:
     case types.UPDATE_POST_SUCCESS:
       return { ...state, [action.payload._id]: action.payload };
     case types.DELETE_POST_SUCCESS:
       delete state[action.payload];
       break;
-    case types.ADD_COMMENT_SUCCESS:
-      if (Object.keys(state).length === 0) {
-        return state;
-      }
-      const { post } = action.payload;
-
-      return {
-        ...state,
-        [post]: {
-          ...state[post],
-          comments: [...state[post].comments, action.payload._id],
-        },
-      };
-    case types.DELETE_COMMENT_SUCCESS: {
-      const { post, _id } = action.payload;
-      const filteredComments = state[post].comments.filter(
-        (comment: Comment) => comment._id !== _id,
-      );
-      return {
-        ...state,
-        [post]: { ...state[post], comments: filteredComments },
-      };
-    }
     default:
       return state;
   }
 };
 
-const post = (state: any, action: AnyAction) => {
-  switch (action.type) {
-    case types.ADD_POST_REQUEST:
-      return {};
-    case types.POST_SUCCESS:
-    case types.ADD_POST_SUCCESS:
-    case types.UPDATE_POST_SUCCESS:
-      return action.payload;
-    case types.DELETE_POST_SUCCESS:
-      if (action.payload === state._id) {
-        return {};
-      }
-      return state;
-    case types.ADD_COMMENT_SUCCESS: {
-      if (action.payload.parent) {
-        const newState = state.comments.map((comment: Comment) =>
-          comment._id === action.payload.parent
-            ? {
-                ...comment,
-                children: [...comment.children, action.payload._id],
-              }
-            : comment,
-        );
-        return {
-          ...state,
-          comments: [...newState, action.payload],
-        };
-      }
-
-      return state;
-    }
-    case types.UPDATE_COMMENT_SUCCESS: {
-      return { ...state, comments: [...state.comments, action.payload] };
-    }
-    case types.DELETE_COMMENT_SUCCESS: {
-      const filteredComments = state.comments.filter(
-        (comment: Comment) => comment._id !== action.payload._id,
-      );
-      return { ...state, comments: filteredComments };
-    }
-    default:
-      return state;
-  }
-};
-
-const reducer = (state: State = initialState, action: AnyAction) =>
+const reducer = (state: PostList = initialState, action: AnyAction) =>
   produce(state, draft => {
     switch (action.type) {
       case types.POSTS_SUCCESS:
-        draft.posts = posts(state.posts, action);
-        break;
-      case types.ADD_POST_REQUEST:
       case types.POST_SUCCESS:
-      case types.UPDATE_COMMENT_SUCCESS:
-        draft.post = post(state.post, action);
-        break;
       case types.ADD_POST_SUCCESS:
       case types.UPDATE_POST_SUCCESS:
       case types.DELETE_POST_SUCCESS:
-      case types.ADD_COMMENT_SUCCESS:
-      case types.DELETE_COMMENT_SUCCESS:
-        draft.posts = posts(state.posts, action);
-        draft.post = post(state.post, action);
-        break;
+        return posts(state, action);
     }
   });
 
