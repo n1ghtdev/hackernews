@@ -16,11 +16,13 @@ async function get<T>(url: string, headers: any = defaultHeaders): Promise<T> {
     headers,
   });
 
+  const json = await response.json();
+
   if (response.ok) {
-    return await response.json();
+    return json;
   }
 
-  throw new Error(await response.json());
+  throw new Error(json.message);
 }
 
 async function post<T>(
@@ -34,6 +36,7 @@ async function post<T>(
     headers,
     body: body && JSON.stringify(body),
   });
+
   const json = await response.json();
 
   if (response.ok) {
