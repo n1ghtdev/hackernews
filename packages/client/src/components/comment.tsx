@@ -3,9 +3,14 @@ import styled from 'styled-components';
 import TimeAgo from 'react-timeago';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../modules/reducers';
-import { addCommentRequest } from '../modules/comments/actions';
+import {
+  addCommentRequest,
+  editCommentRequest,
+  deleteCommentRequest,
+} from '../modules/comments/actions';
 import Comments from './comments';
 import AddCommentForm from './add-comment-form';
+import EditCommentForm from './edit-comment-form';
 import { Comment as CommentType } from '../modules/comments/types';
 import { selectCommentReplies } from '../modules/comments/selectors';
 
@@ -28,7 +33,7 @@ const Body = styled.div`
   font-size: 14px;
 `;
 
-const ReplyButton = styled.button`
+const Button = styled.button`
   padding: 0;
   background: none;
   border: none;
@@ -49,10 +54,16 @@ export default function Comment(props: Props) {
   );
 
   const [reply, setReply] = React.useState(false);
+  const [edit, setEdit] = React.useState(false);
 
   function onReply(text: string) {
     dispatch(addCommentRequest({ post: postId, text, parent: comment._id }));
     setReply(false);
+  }
+
+  function onEdit(text: string) {
+    dispatch(editCommentRequest({ _id: comment._id, text }));
+    setEdit(false);
   }
 
   return (
@@ -61,8 +72,39 @@ export default function Comment(props: Props) {
         {comment.user?.name} <TimeAgo date={comment.createdAt} live={false} />
       </Header>
       <Body>{comment.text}</Body>
-      <ReplyButton onClick={() => setReply(!reply)}>reply</ReplyButton>
+      <Button
+        onClick={() => {
+          if (edit) {
+            setEdit(false);
+          }
+          setReply(!reply);
+        }}
+      >
+        reply
+      </Button>
+      <Button
+        onClick={() => {
+          if (reply) {
+            setReply(false);
+          }
+          setEdit(!edit);
+        }}
+      >
+        /edit
+      </Button>
+      <Button
+        onClick={() => {
+          setReply(false);
+          setEdit(false);
+          dispatch(deleteCommentRequest(comment._id));
+        }}
+      >
+        /delete
+      </Button>
       {reply ? <AddCommentForm onAddComment={onReply} /> : null}
+      {edit ? (
+        <EditCommentForm onEditComment={onEdit} currentComment={comment.text} />
+      ) : null}
       {replies ? <Comments comments={replies} postId={postId} /> : null}
     </Wrapper>
   );

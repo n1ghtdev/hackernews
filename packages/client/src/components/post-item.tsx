@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import TimeAgo from 'react-timeago';
 import { Post } from '../modules/posts/types';
+import { selectPostCommentsCount } from '../modules/comments/selectors';
+import { RootState } from '../modules/reducers';
 
 type Props = {
   post: Post;
@@ -42,6 +45,10 @@ const Author = styled(Link)`
 
 export default function PostItem(props: Props) {
   const { post, index } = props;
+  const commentsCount = useSelector((state: RootState) =>
+    selectPostCommentsCount(state.comments, post._id),
+  );
+
   return (
     <Wrapper>
       <Title>
@@ -56,7 +63,7 @@ export default function PostItem(props: Props) {
           {post.points} points by{' '}
           <Author to={`/user/${post.author?._id}`}>{post.author?.name}</Author>{' '}
           at <TimeAgo date={post.createdAt} live={false} /> {'|'}{' '}
-          {post.comments?.length} comments
+          {commentsCount} comments
         </span>
       </Info>
     </Wrapper>

@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { addComment, getComments } from '../../api';
+import { addComment, getComments, editComment, deleteComment } from '../../api';
 import * as types from './constants';
 import { RootState } from '../reducers';
 import { Comment } from './types';
@@ -58,5 +58,63 @@ export const addCommentSuccess = (payload: Comment) => ({
 
 export const addCommentFailure = (error: Error) => ({
   type: types.ADD_COMMENT_FAILURE,
+  error,
+});
+
+export function editCommentRequest(
+  comment: Partial<Comment>,
+): ThunkAction<void, RootState, unknown, Action<string>> {
+  return async (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: types.UPDATE_COMMENT_REQUEST });
+
+    editComment(comment, accessToken).then(
+      (data: Comment) => {
+        dispatch(editCommentSuccess(data));
+      },
+      (error: Error) => {
+        dispatch(editCommentFailure(error));
+      },
+    );
+  };
+}
+
+export const editCommentSuccess = (payload: Comment) => ({
+  type: types.UPDATE_COMMENT_SUCCESS,
+  payload,
+});
+
+export const editCommentFailure = (error: Error) => ({
+  type: types.UPDATE_COMMENT_FAILURE,
+  error,
+});
+
+export function deleteCommentRequest(
+  id: string,
+): ThunkAction<void, RootState, unknown, Action<string>> {
+  return async (dispatch, getState) => {
+    const accessToken = getState().auth.accessToken;
+
+    dispatch({ type: types.DELETE_COMMENT_REQUEST });
+
+    deleteComment(id, accessToken).then(
+      (data: any) => {
+        dispatch(deleteCommentSuccess(data.id));
+      },
+      (error: Error) => {
+        dispatch(deleteCommentFailure(error));
+      },
+    );
+  };
+}
+
+export const deleteCommentSuccess = (id: string) => ({
+  type: types.DELETE_COMMENT_SUCCESS,
+  payload: id,
+});
+
+export const deleteCommentFailure = (error: Error) => ({
+  type: types.DELETE_COMMENT_FAILURE,
   error,
 });

@@ -8,7 +8,7 @@ export class CommentService {
       .exec();
 
     if (!records) {
-      throw new Error('Not Found');
+      throw new Error('Not found');
     }
 
     return records;
@@ -39,5 +39,29 @@ export class CommentService {
       .execPopulate();
 
     return commentRecord;
+  }
+
+  static async edit(id, changedText) {
+    const changedComment = await CommentModel.findOneAndUpdate(
+      { _id: id },
+      { text: changedText },
+      { new: true },
+    ).populate({ path: 'user', select: '_id, name' });
+
+    return changedComment;
+  }
+
+  static async delete(id) {
+    try {
+      const status = await CommentModel.deleteOne({ _id: id });
+
+      if (!status.ok) {
+        throw new Error({ message: 'Cannot delete comment' });
+      }
+
+      return true;
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 }

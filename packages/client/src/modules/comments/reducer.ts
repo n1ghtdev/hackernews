@@ -19,6 +19,14 @@ export default function reducer(state: Comments = {}, action: AnyAction) {
         draft[action.payload._id] = action.payload;
         break;
       }
+      case types.UPDATE_COMMENT_SUCCESS: {
+        draft[action.payload._id] = action.payload;
+        break;
+      }
+      case types.DELETE_COMMENT_SUCCESS: {
+        delete draft[action.payload];
+        break;
+      }
     }
   });
 }

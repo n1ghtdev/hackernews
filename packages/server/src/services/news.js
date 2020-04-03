@@ -61,10 +61,6 @@ export class NewsService {
       const doc = await NewsModel.findById(id);
       const status = await doc.deleteOne();
 
-      if (!status) {
-        throw new Error('Deleting Failed');
-      }
-
       return status;
     } catch (error) {
       throw new Error(error.message);

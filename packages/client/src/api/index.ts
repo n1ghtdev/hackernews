@@ -46,6 +46,22 @@ async function post<T>(
   throw new Error(json.message);
 }
 
+async function del(url: string, headers: any = defaultHeaders) {
+  const response = await fetch(url, {
+    method: 'DELETE',
+    credentials: 'include',
+    headers,
+  });
+
+  const json = await response.json();
+
+  if (response.ok) {
+    return json;
+  }
+
+  throw new Error(json.message);
+}
+
 /**** POSTS */
 
 export async function getPosts() {
@@ -61,8 +77,8 @@ export async function getPost(id: string) {
 export async function addPost(data: Partial<Post>, token: string) {
   const headers = { ...defaultHeaders, authorization: `Bearer ${token}` };
 
-  const posted = await post<Post>(`${POST_API}`, data, headers);
-  return posted;
+  const response = await post<Post>(`${POST_API}`, data, headers);
+  return response;
 }
 
 /**** COMMENTS */
@@ -75,8 +91,22 @@ export async function getComments(postId: string) {
 export async function addComment(data: Partial<Comment>, token: string) {
   const headers = { ...defaultHeaders, authorization: `Bearer ${token}` };
 
-  const posted = await post<Comment>(`${COMMENT_API}`, data, headers);
-  return posted;
+  const response = await post<Comment>(`${COMMENT_API}`, data, headers);
+  return response;
+}
+
+export async function editComment(data: Partial<Comment>, token: string) {
+  const headers = { ...defaultHeaders, authorization: `Bearer ${token}` };
+
+  const response = await post<Comment>(`${COMMENT_API}/edit`, data, headers);
+  return response;
+}
+
+export async function deleteComment(id: string, token: string) {
+  const headers = { ...defaultHeaders, authorization: `Bearer ${token}` };
+
+  const response = await del(`${COMMENT_API}/${id}`, headers);
+  return response;
 }
 
 /**** AUTH */

@@ -11,3 +11,8 @@ export function selectCommentReplies(comments: Comments, commentIds: string[]) {
     commentIds.some((id: string) => id === comment._id),
   );
 }
+
+export function selectPostCommentsCount(comments: Comments, postId: string) {
+  const postComments = selectCommentsByPost(comments, postId);
+  return postComments ? postComments.length : 0;
+}

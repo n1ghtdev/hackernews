@@ -27,4 +27,28 @@ router.post('/', isAuth, async (req, res, next) => {
   }
 });
 
+router.post('/edit', isAuth, async (req, res, next) => {
+  try {
+    const changedComment = await CommentService.edit(
+      req.body._id,
+      req.body.text,
+    );
+    res.json(changedComment).status(200);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete('/:commentId', isAuth, async (req, res, next) => {
+  try {
+    const isDeleted = await CommentService.delete(req.params.commentId);
+
+    if (isDeleted) {
+      res.json({ id: req.params.commentId }).status(200);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
 export { router as comment };

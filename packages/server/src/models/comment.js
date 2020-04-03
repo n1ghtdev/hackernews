@@ -15,6 +15,4 @@ const CommentSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-// TODO: cascade deleting comments of comments
-
 export default mongoose.model('Comment', CommentSchema);
