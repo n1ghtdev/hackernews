@@ -1,5 +1,6 @@
 import React from 'react';
 import useForm from '../hooks/use-form';
+import useErrors from '../hooks/use-errors';
 
 type Props = {
   onSubmit: (data: { [key: string]: string }) => void;
@@ -11,6 +12,8 @@ type FormValues = {
 };
 
 export default function SignInForm(props: Props) {
+  const error = useErrors('auth-signin');
+
   const { values, handleChange, handleSubmit } = useForm<FormValues>(
     () => props.onSubmit(values),
     {
@@ -18,6 +21,7 @@ export default function SignInForm(props: Props) {
       password: '',
     },
   );
+
   return (
     <form onSubmit={handleSubmit}>
       <input
@@ -25,14 +29,17 @@ export default function SignInForm(props: Props) {
         name="email"
         value={values.email}
         onChange={handleChange}
+        required
       />
       <input
         type="password"
         name="password"
         value={values.password}
         onChange={handleChange}
+        required
       />
       <button type="submit">Sign In</button>
+      {error ? <span style={{ color: 'red' }}>{error}</span> : null}
     </form>
   );
 }

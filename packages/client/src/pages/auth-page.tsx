@@ -24,6 +24,7 @@ export default function AuthPage() {
       <SignInForm
         onSubmit={(data: Partial<AuthUser>) => dispatch(signInRequest(data))}
       />
+
       <SignUpForm
         onSubmit={(data: Partial<AuthUser>) => dispatch(signUpRequest(data))}
       />
