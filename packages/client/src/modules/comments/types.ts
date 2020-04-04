@@ -11,6 +11,7 @@ export type Comment = {
   user: AuthUser;
   post: string;
   children: string[];
+  isDeleted: boolean;
   createdAt: string;
   updatedAt: string;
 };

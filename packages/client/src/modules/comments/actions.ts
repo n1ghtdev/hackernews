@@ -100,7 +100,7 @@ export function deleteCommentRequest(
 
     deleteComment(id, accessToken).then(
       (data: any) => {
-        dispatch(deleteCommentSuccess(data.id));
+        dispatch(deleteCommentSuccess(data));
       },
       (error: Error) => {
         dispatch(deleteCommentFailure(error));
@@ -109,9 +109,9 @@ export function deleteCommentRequest(
   };
 }
 
-export const deleteCommentSuccess = (id: string) => ({
+export const deleteCommentSuccess = (payload: Comment) => ({
   type: types.DELETE_COMMENT_SUCCESS,
-  payload: id,
+  payload,
 });
 
 export const deleteCommentFailure = (error: Error) => ({

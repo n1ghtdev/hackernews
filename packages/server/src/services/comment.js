@@ -42,26 +42,31 @@ export class CommentService {
   }
 
   static async edit(id, changedText) {
-    const changedComment = await CommentModel.findOneAndUpdate(
+    const isCommentEditable = await CommentModel.findOne(
       { _id: id },
-      { text: changedText },
-      { new: true },
-    ).populate({ path: 'user', select: '_id, name' });
+      { isDeleted: 1 },
+    );
 
-    return changedComment;
+    if (isCommentEditable) {
+      const changedComment = await CommentModel.findOneAndUpdate(
+        { _id: id },
+        { text: changedText },
+        { new: true },
+      ).populate({ path: 'user', select: '_id, name' });
+
+      return changedComment;
+    }
+
+    throw new Error('Comment is not editable');
   }
 
   static async delete(id) {
-    try {
-      const status = await CommentModel.deleteOne({ _id: id });
+    const deletedComment = await CommentModel.findOneAndUpdate(
+      { _id: id },
+      { text: '[removed]', isDeleted: true },
+      { new: true },
+    ).populate({ path: 'user', select: '_id, name' });
 
-      if (!status.ok) {
-        throw new Error({ message: 'Cannot delete comment' });
-      }
-
-      return true;
-    } catch (error) {
-      throw new Error(error.message);
-    }
+    return deletedComment;
   }
 }

@@ -34,7 +34,7 @@ export default function SinglePostItem(props: Props) {
 
   return (
     <>
-      <PostItem post={post} />
+      <PostItem post={post} commentsCount={comments.length} />
       <AddCommentForm
         onAddComment={(text: string) => {
           dispatch(addCommentRequest({ post: post._id, text }));

@@ -13,7 +13,6 @@ import { Post } from '../modules/posts/types';
 export default function PostsPage() {
   const dispatch = useDispatch();
   const posts = useSelector((state: RootState) => selectPosts(state.posts));
-
   const isLoading = useLoading('posts');
 
   React.useEffect(() => {
@@ -28,7 +27,12 @@ export default function PostsPage() {
     <PostList>
       {posts.length &&
         posts.map((post: Post, index: number) => (
-          <PostItem key={post._id} index={index + 1} post={post} />
+          <PostItem
+            key={post._id}
+            index={index + 1}
+            post={post}
+            commentsCount={post.comments.length}
+          />
         ))}
     </PostList>
   );

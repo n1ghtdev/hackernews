@@ -41,11 +41,10 @@ router.post('/edit', isAuth, async (req, res, next) => {
 
 router.delete('/:commentId', isAuth, async (req, res, next) => {
   try {
-    const isDeleted = await CommentService.delete(req.params.commentId);
+    console.log(req);
 
-    if (isDeleted) {
-      res.json({ id: req.params.commentId }).status(200);
-    }
+    const deletedComment = await CommentService.delete(req.params.commentId);
+    res.json(deletedComment).status(200);
   } catch (error) {
     next(error);
   }

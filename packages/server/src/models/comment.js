@@ -11,6 +11,7 @@ const CommentSchema = new mongoose.Schema(
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     post: { type: mongoose.Schema.Types.ObjectId, ref: 'News' },
     children: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+    isDeleted: { type: Boolean, default: false },
   },
   { timestamps: true },
 );

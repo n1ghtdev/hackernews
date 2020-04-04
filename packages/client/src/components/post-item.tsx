@@ -1,15 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import TimeAgo from 'react-timeago';
 import { Post } from '../modules/posts/types';
-import { selectPostCommentsCount } from '../modules/comments/selectors';
-import { RootState } from '../modules/reducers';
 
 type Props = {
   post: Post;
   index?: number;
+  commentsCount: number;
 };
 
 const Wrapper = styled.article`
@@ -44,10 +42,7 @@ const Author = styled(Link)`
 `;
 
 export default function PostItem(props: Props) {
-  const { post, index } = props;
-  const commentsCount = useSelector((state: RootState) =>
-    selectPostCommentsCount(state.comments, post._id),
-  );
+  const { post, index, commentsCount } = props;
 
   return (
     <Wrapper>

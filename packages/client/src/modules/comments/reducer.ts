@@ -1,6 +1,6 @@
 import produce from 'immer';
-import * as types from './constants';
 import { AnyAction } from 'redux';
+import * as types from './constants';
 import { Comment, Comments } from './types';
 
 export default function reducer(state: Comments = {}, action: AnyAction) {
@@ -24,7 +24,7 @@ export default function reducer(state: Comments = {}, action: AnyAction) {
         break;
       }
       case types.DELETE_COMMENT_SUCCESS: {
-        delete draft[action.payload];
+        draft[action.payload._id] = action.payload;
         break;
       }
     }

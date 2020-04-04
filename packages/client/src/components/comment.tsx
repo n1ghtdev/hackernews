@@ -82,25 +82,29 @@ export default function Comment(props: Props) {
       >
         reply
       </Button>
-      <Button
-        onClick={() => {
-          if (reply) {
-            setReply(false);
-          }
-          setEdit(!edit);
-        }}
-      >
-        /edit
-      </Button>
-      <Button
-        onClick={() => {
-          setReply(false);
-          setEdit(false);
-          dispatch(deleteCommentRequest(comment._id));
-        }}
-      >
-        /delete
-      </Button>
+      {!comment.isDeleted ? (
+        <>
+          <Button
+            onClick={() => {
+              if (reply) {
+                setReply(false);
+              }
+              setEdit(!edit);
+            }}
+          >
+            /edit
+          </Button>
+          <Button
+            onClick={() => {
+              setReply(false);
+              setEdit(false);
+              dispatch(deleteCommentRequest(comment._id));
+            }}
+          >
+            /delete
+          </Button>
+        </>
+      ) : null}
       {reply ? <AddCommentForm onAddComment={onReply} /> : null}
       {edit ? (
         <EditCommentForm onEditComment={onEdit} currentComment={comment.text} />
