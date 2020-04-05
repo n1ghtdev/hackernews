@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Comment from './comment';
-import { Comment as CommentType } from '../modules/comments/types';
+import { Comment as CommentType } from '../../modules/comments/types';
 
 type Props = {
   comments: CommentType[];

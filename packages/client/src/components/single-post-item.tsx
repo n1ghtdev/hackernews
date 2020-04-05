@@ -1,16 +1,18 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+import PostItem from './post-item';
+import Comments from './comments';
+import AddCommentForm from './comments/comment/add-comment-form';
+
+import { RootState } from '../modules/reducers';
+import { selectCommentsByPost } from '../modules/comments/selectors';
+import { Comment } from '../modules/comments/types';
+import { Post } from '../modules/posts/types';
 import {
   addCommentRequest,
   commentsRequest,
 } from '../modules/comments/actions';
-import { Post } from '../modules/posts/types';
-import PostItem from './post-item';
-import Comments from './comments';
-import AddCommentForm from './add-comment-form';
-import { RootState } from '../modules/reducers';
-import { selectCommentsByPost } from '../modules/comments/selectors';
-import { Comment } from '../modules/comments/types';
 
 type Props = {
   post: Post;
