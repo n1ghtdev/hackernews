@@ -66,6 +66,7 @@ export class AuthService {
     }
 
     const userRecord = await UserModel.findOne({ _id: payload._id });
+
     if (!userRecord) {
       throw new Error('User not found');
     } else if (userRecord.refreshToken !== token) {

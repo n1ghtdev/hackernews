@@ -11,11 +11,11 @@ function getTokenFromHeader(req) {
   return null;
 }
 
-export function isAuth(req, res, next) {
+export async function isAuth(req, res, next) {
   const token = getTokenFromHeader(req);
 
   if (!token) {
-    return res.status(401).send('Access Denied');
+    return res.status(401).send({ message: 'Access Denied' });
   }
 
   try {
@@ -23,7 +23,7 @@ export function isAuth(req, res, next) {
     req.user = verified;
     next();
   } catch (err) {
-    res.status(400).send('Invalid Token');
+    res.status(400).send({ message: 'Invalid Token' });
     next();
   }
 }

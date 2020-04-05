@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './modules/reducers';
+import { renewTokens } from './modules/middlewares';
 
 export function configureStore() {
   let composeEnhancers = compose;
@@ -13,7 +14,7 @@ export function configureStore() {
     }
   }
 
-  const middlewares = [thunk];
+  const middlewares = [thunk, renewTokens];
   const enhancers = [applyMiddleware(...middlewares)];
   const store = createStore(reducers, composeEnhancers(...enhancers));
 
