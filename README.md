@@ -1,4 +1,4 @@
-### Hackernews clone with MERN-stack
+### Hackernews clone | MERN-stack
 
 #### server
 
@@ -8,17 +8,17 @@
 - [x] protected routes
 - [x] user/news relation (mongo refs)
 - [x] add refresh token and store it in cookies
-- [ ] delete post/comments relation (also delete from user posts/comments)
 - [ ] validate new post
 - [ ] posts pagination
 - [ ] use post slug instead of id
-- [ ] logger
 
 #### client
 
 - [x] redux
   - [x] user module
   - [x] posts module
+  - [x] comments module
+  - [x] auth module
 - [x] posts page
 - [x] post page
   - [x] comments
@@ -29,8 +29,8 @@
   - [x] private route
 - [ ] error handling
   - [x] handle redux store errors
-  - [x] handle fetch api error
-  - [ ] handle react components error (Error Boundaries)
+  - [x] handle fetch api errors
+  - [ ] handle react components errors (Error Boundaries)
 - [ ] error messages/popups
 - [ ] post and comment points
 - [ ] user page
