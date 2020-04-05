@@ -41,11 +41,16 @@ export class CommentService {
     return commentRecord;
   }
 
-  static async edit(id, changedText) {
-    const isCommentEditable = await CommentModel.findOne(
+  static async edit(id, changedText, userId) {
+    const comment = await CommentModel.findOne(
       { _id: id },
       { isDeleted: 1 },
-    );
+      { user: 1 },
+    ).populate({ path: 'user' });
+
+    const isCommentEditable = !comment.isDeleted
+      || comment.user._id.toString() === userId
+      || comment.user.role === 'admin';
 
     if (isCommentEditable) {
       const changedComment = await CommentModel.findOneAndUpdate(
@@ -57,16 +62,25 @@ export class CommentService {
       return changedComment;
     }
 
-    throw new Error('Comment is not editable');
+    throw new Error('Access Denied');
   }
 
-  static async delete(id) {
-    const deletedComment = await CommentModel.findOneAndUpdate(
+  static async delete(id, userId) {
+    const { user } = await CommentModel.findOne(
       { _id: id },
-      { text: '[removed]', isDeleted: true },
-      { new: true },
-    ).populate({ path: 'user', select: '_id, name' });
+      { user: 1 },
+    ).populate({ path: 'user' });
 
-    return deletedComment;
+    if (user._id.toString() === userId || user.role === 'admin') {
+      const deletedComment = await CommentModel.findOneAndUpdate(
+        { _id: id },
+        { text: '[removed]', isDeleted: true },
+        { new: true },
+      ).populate({ path: 'user', select: '_id, name' });
+
+      return deletedComment;
+    }
+
+    throw new Error('Access Denied');
   }
 }

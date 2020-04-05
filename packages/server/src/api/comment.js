@@ -32,6 +32,7 @@ router.post('/edit', isAuth, async (req, res, next) => {
     const changedComment = await CommentService.edit(
       req.body._id,
       req.body.text,
+      req.user._id,
     );
     res.json(changedComment).status(200);
   } catch (error) {
@@ -41,7 +42,10 @@ router.post('/edit', isAuth, async (req, res, next) => {
 
 router.delete('/:commentId', isAuth, async (req, res, next) => {
   try {
-    const deletedComment = await CommentService.delete(req.params.commentId);
+    const deletedComment = await CommentService.delete(
+      req.params.commentId,
+      req.user._id,
+    );
     res.json(deletedComment).status(200);
   } catch (error) {
     next(error);
